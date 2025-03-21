@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maglia Creativa</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        function toggleMenu() {
+            let menu = document.getElementById("menu");
+            let overlay = document.getElementById("overlay");
+            if (menu.classList.contains("translate-x-full")) {
+                menu.classList.remove("translate-x-full");
+                menu.classList.add("translate-x-0");
+                overlay.classList.remove("hidden");
+            } else {
+                menu.classList.remove("translate-x-0");
+                menu.classList.add("translate-x-full");
+                overlay.classList.add("hidden");
+            }
+        }
+    </script>
+</head>
+<body class="bg-white text-gray-900 font-sans">
+    <header class="bg-pink-500 text-white p-4 fixed w-full top-0 flex justify-between items-center z-50 shadow-md">
+        <h1 class="text-2xl font-bold ml-4">Maglia Creativa</h1>
+        <button class="text-2xl mr-4" onclick="toggleMenu()">☰</button>
+    </header>
+    
+    <div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 hidden z-40" onclick="toggleMenu()"></div>
+    
+    <nav id="menu" class="fixed top-0 right-0 w-64 h-full bg-pink-500 text-white transform translate-x-full transition-transform duration-300 flex flex-col items-center p-6 z-50 shadow-lg">
+        <button class="self-end text-2xl mb-4" onclick="toggleMenu()">✕</button>
+        <ul class="w-full text-lg text-center space-y-6">
+            <li><a href="#about" class="block hover:bg-pink-400 px-4 py-2 rounded" onclick="toggleMenu()">Chi Siamo</a></li>
+            <li><a href="#gallery" class="block hover:bg-pink-400 px-4 py-2 rounded" onclick="toggleMenu()">Galleria</a></li>
+            <li><a href="#contact" class="block hover:bg-pink-400 px-4 py-2 rounded" onclick="toggleMenu()">Contattami!</a></li>
+        </ul>
+    </nav>
+    
+    <section class="mt-20 relative w-full h-screen flex justify-center items-center bg-gradient-to-r from-pink-100 to-pink-200 z-0">
+        <div class="text-center">
+            <h2 class="text-5xl font-bold text-pink-600">Benvenuti su Maglia Creativa</h2>
+            <p class="text-lg mt-4 text-gray-700">Esplora il mondo degli oggetti in maglia fatti a mano con passione.</p>
+        </div>
+    </section>
+    
+    <section id="about" class="p-10 text-center bg-white border-t-4 border-pink-100">
+        <h2 class="text-4xl font-bold text-pink-500">Come Nascono i Nostri Oggetti</h2>
+        <p class="mt-4 text-lg max-w-3xl mx-auto">Ogni pezzo viene realizzato interamente a mano con la tecnica dell'uncinetto. Partiamo dalla selezione di filati di alta qualità, spesso in cotone o lana, per poi passare alla lavorazione punto dopo punto, con cura e pazienza. I nostri oggetti – borse, decorazioni floreali e accessori – sono frutto di ore di passione artigianale e attenzione ai dettagli, rendendo ogni creazione unica e originale.</p>
+    </section>
+    
+    <section id="gallery" class="p-10 text-center bg-gray-50 border-t-4 border-pink-200">
+        <h2 class="text-4xl font-bold text-pink-500">Galleria</h2>
+        <p class="mt-4 text-lg">Esplora le nostre creazioni.</p>
+        <div id="default-carousel" class="relative w-full max-w-4xl mx-auto mt-6" data-carousel="slide">
+            <div class="relative h-64 overflow-hidden rounded-lg">
+                <div class="hidden duration-700 ease-in-out" data-carousel-item>
+                    <img src="fotogiovanna.jpg" class="absolute block w-full h-full object-cover" alt="Foto Giovanna">
+                </div>
+                <div class="hidden duration-700 ease-in-out" data-carousel-item>
+                    <img src="borsagiovanna.jpg" class="absolute block w-full h-full object-cover" alt="Borsa Giovanna">
+                </div>
+                <div class="hidden duration-700 ease-in-out bg-green-300 flex items-center justify-center text-white text-2xl font-bold" data-carousel-item>Immagine 3</div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="contact" class="p-10 text-center bg-pink-50 border-t-4 border-pink-300">
+        <h2 class="text-4xl font-bold text-pink-600">Contattami!</h2>
+        <p class="mt-4 text-lg">Vuoi saperne di più o commissionare un oggetto personalizzato? Scrivimi su WhatsApp!</p>
+        <a href="https://wa.me/1234567890" class="mt-6 inline-block bg-green-500 text-white px-6 py-3 rounded shadow-md hover:bg-green-700 text-lg">Chatta su WhatsApp</a>
+    </section>
+    
+    <footer class="bg-pink-500 text-white text-center p-4 mt-10">
+        <p>&copy; 2025 Maglia Creativa. Tutti i diritti riservati.</p>
+    </footer>
+</body>
+</html>
