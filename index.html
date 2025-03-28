@@ -51,7 +51,7 @@
 <body class="bg-gray-100 text-gray-900 font-sans overflow-x-hidden">
   <!-- Overlay + Menu Laterale (Slide-in) -->
   <div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 hidden z-40" onclick="toggleMenu()"></div>
-  <nav id="menu" class="fixed top-0 right-0 w-64 h-full bg-purple-700 text-white transform translate-x-full transition-transform duration-300 flex flex-col items-center p-6 z-50 shadow-lg">
+  <nav id="menu" class="fixed top-0 right-0 w-64 h-full bg-purple-700 text-white transform translate-x-full transition-transform duration-300 flex flex-col items-center p-6 z-50 shadow-lg invisible">
     <button class="self-end text-2xl mb-4" onclick="toggleMenu()">✕</button>
     <ul class="w-full text-lg text-center space-y-6">
       <li><a href="#hero" class="block hover:bg-purple-600 px-4 py-2 rounded" onclick="toggleMenu()">Home</a></li>
@@ -76,12 +76,13 @@
   <!-- Hero Section -->
   <section id="hero" class="relative bg-cover bg-center h-screen flex items-center justify-center px-6">
     <div class="absolute inset-0">
-  <img src="heroGiovanna.jpg" alt="Hero" class="w-full h-full object-cover opacity-50">
+  <img src="heroGiovanna.jpg" alt="Hero" class="w-full h-full object-cover">
+  <div class="absolute inset-0 bg-black opacity-50"></div>
 </div>
     <div class="relative z-10 text-center max-w-3xl mx-auto space-y-6">
     <div class="max-w-5xl mx-auto">
-      <h2 class="text-5xl font-extrabold text-purple-700" style="line-height: 1.2;">Benvenuti su Maglia Creativa</h2>
-      <p class="text-lg mt-4 text-gray-700" style="max-width: 700px; margin: 0 auto;">
+      <h2 class="text-5xl font-extrabold text-white" style="line-height: 1.2;">Benvenuti su Maglia Creativa</h2>
+      <p class="text-lg mt-4 text-white" style="max-width: 700px; margin: 0 auto;">
         Esplora la fusione tra tradizione artigianale e creatività moderna. Ogni capo racconta una storia fatta a mano, pensata per durare e scaldare.
       </p>
     </div>
@@ -183,12 +184,20 @@
     setInterval(() => rotateCarousel(1), 4000);
 
     function toggleMenu() {
-      const menu = document.getElementById('menu');
-      const overlay = document.getElementById('overlay');
-      menu.classList.toggle('translate-x-full');
-      menu.classList.toggle('translate-x-0');
-      overlay.classList.toggle('hidden');
-    }
+  const menu = document.getElementById('menu');
+  const overlay = document.getElementById('overlay');
+  const isHidden = menu.classList.contains('translate-x-full');
+  if (isHidden) {
+    menu.classList.remove('translate-x-full');
+    menu.classList.add('translate-x-0');
+    menu.classList.remove('invisible');
+    overlay.classList.remove('hidden');
+  } else {
+    menu.classList.add('translate-x-full');
+    overlay.classList.add('hidden');
+    setTimeout(() => menu.classList.add('invisible'), 300);
+  }
+}
 
     window.addEventListener('scroll', () => {
       document.querySelectorAll('.fade-in').forEach(el => {
