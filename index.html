@@ -1,99 +1,215 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Maglia Creativa</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        function toggleMenu() {
-            let menu = document.getElementById("menu");
-            let overlay = document.getElementById("overlay");
-            if (menu.classList.contains("translate-x-full")) {
-                menu.classList.remove("translate-x-full");
-                menu.classList.add("translate-x-0");
-                overlay.classList.remove("hidden");
-            } else {
-                menu.classList.remove("translate-x-0");
-                menu.classList.add("translate-x-full");
-                overlay.classList.add("hidden");
-            }
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Maglia Creativa</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* 3D Carousel Styles */
+    .carousel-wrapper {
+      perspective: 1000px;
+    }
+    .carousel-3d {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transform-style: preserve-3d;
+      transform: translateZ(-300px) rotateY(0deg);
+      transition: transform 1s ease;
+    }
+    .carousel-3d > div {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform-origin: center center;
+      width: 240px;
+      height: 320px;
+      margin-left: -120px;
+      background: white;
+      border-radius: 0.75rem;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      backface-visibility: hidden;
+    }
 
-        document.addEventListener("DOMContentLoaded", function () {
-            const items = document.querySelectorAll('[data-carousel-item]');
-            const total = items.length;
-            let index = 0;
-
-            function showItem(i) {
-                items.forEach((el, idx) => {
-                    el.classList.add("hidden");
-                    if (idx === i) el.classList.remove("hidden");
-                });
-            }
-
-            document.getElementById("carousel-prev")?.addEventListener("click", () => {
-                index = (index - 1 + total) % total;
-                showItem(index);
-            });
-
-            document.getElementById("carousel-next")?.addEventListener("click", () => {
-                index = (index + 1) % total;
-                showItem(index);
-            });
-
-            showItem(index);
-        });
-    </script>
+    /* Fade-in Scroll Animation */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    }
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
 </head>
 <body class="bg-gray-100 text-gray-900 font-sans">
-    <header class="bg-purple-700 text-white p-4 fixed w-full top-0 flex justify-between items-center z-50 shadow-md">
-        <h1 class="text-2xl font-bold ml-4">Maglia Creativa</h1>
-        <button class="text-2xl mr-4" onclick="toggleMenu()">☰</button>
-    </header>
-    
-    <div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 hidden z-40" onclick="toggleMenu()"></div>
-    
-    <nav id="menu" class="fixed top-0 right-0 w-64 h-full bg-purple-600 text-white transform translate-x-full transition-transform duration-300 flex flex-col items-center p-6 z-50 shadow-lg">
-        <button class="self-end text-2xl mb-4" onclick="toggleMenu()">✕</button>
-        <ul class="w-full text-lg text-center space-y-6">
-            <li><a href="#about" class="block hover:bg-purple-500 px-4 py-2 rounded" onclick="toggleMenu()">Chi Siamo</a></li>
-            <li><a href="#gallery" class="block hover:bg-purple-500 px-4 py-2 rounded" onclick="toggleMenu()">Galleria</a></li>
-            <li><a href="#contact" class="block hover:bg-purple-500 px-4 py-2 rounded" onclick="toggleMenu()">Contattami!</a></li>
-        </ul>
+  <!-- Overlay + Menu Laterale (Slide-in) -->
+  <div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 hidden z-40" onclick="toggleMenu()"></div>
+  <nav id="menu" class="fixed top-0 right-0 w-64 h-full bg-purple-700 text-white transform translate-x-full transition-transform duration-300 flex flex-col items-center p-6 z-50 shadow-lg">
+    <button class="self-end text-2xl mb-4" onclick="toggleMenu()">✕</button>
+    <ul class="w-full text-lg text-center space-y-6">
+      <li><a href="#hero" class="block hover:bg-purple-600 px-4 py-2 rounded" onclick="toggleMenu()">Home</a></li>
+      <li><a href="#about" class="block hover:bg-purple-600 px-4 py-2 rounded" onclick="toggleMenu()">Chi Sono</a></li>
+      <li><a href="#gallery" class="block hover:bg-purple-600 px-4 py-2 rounded" onclick="toggleMenu()">Galleria</a></li>
+      <li><a href="#contact" class="block hover:bg-purple-600 px-4 py-2 rounded" onclick="toggleMenu()">Contattami!</a></li>
+    </ul>
+  </nav>
+
+  <!-- Header + Navbar Desktop -->
+  <header class="bg-purple-700 text-white p-4 fixed w-full top-0 flex justify-between items-center z-50 shadow-md">
+    <h1 class="text-2xl font-bold ml-4">Maglia Creativa</h1>
+    <nav class="hidden md:flex space-x-6 mr-4">
+      <a href="#hero" class="hover:underline">Home</a>
+      <a href="#about" class="hover:underline">Chi Sono</a>
+      <a href="#gallery" class="hover:underline">Galleria</a>
+      <a href="#contact" class="hover:underline">Contattami</a>
     </nav>
-    
-    <section class="mt-20 relative w-full h-screen flex justify-center items-center bg-gradient-to-r from-purple-100 to-gray-200 z-0">
-        <div class="text-center">
-            <h2 class="text-5xl font-bold text-purple-700">Benvenuti su Maglia Creativa</h2>
-            <p class="text-lg mt-4 text-gray-700">Esplora il mondo degli oggetti in maglia fatti a mano con passione.</p>
+    <button class="md:hidden text-2xl mr-4" onclick="toggleMenu()">☰</button>
+  </header>
+
+  <!-- Hero Section -->
+  <section id="hero" class="relative bg-cover bg-center h-screen flex items-center justify-center px-6">
+    <div class="absolute inset-0">
+  <img src="heroGiovanna.jpg" alt="Hero" class="w-full h-full object-cover blur-sm opacity-80">
+</div>
+    <div class="relative z-10 text-center max-w-3xl mx-auto space-y-6">
+    <div class="max-w-5xl mx-auto">
+      <h2 class="text-5xl font-extrabold text-purple-700" style="line-height: 1.2;">Benvenuti su Maglia Creativa</h2>
+      <p class="text-lg mt-4 text-gray-700" style="max-width: 700px; margin: 0 auto;">
+        Esplora la fusione tra tradizione artigianale e creatività moderna. Ogni capo racconta una storia fatta a mano, pensata per durare e scaldare.
+      </p>
+    </div>
+  </section>
+
+<section id="promo" class="p-8 text-center bg-purple-50 border-t border-gray-200 fade-in">
+    <div class="max-w-5xl mx-auto">
+      <h2 class="text-3xl md:text-4xl font-bold text-purple-700 mb-4">Tradizione &amp; Stile</h2>
+      <p class="text-lg text-gray-700 leading-relaxed max-w-3xl mx-auto">
+        Coniughiamo materiali di altissima qualità e un approccio artigianale per offrirti creazioni in maglia uniche, confortevoli e durature.
+        Ogni filo intreccia passione, cura e un tocco di magia, per aggiungere un pizzico di calore alla tua vita.
+      </p>
+    </div>
+  </section>
+
+  <!-- Galleria (3D Carousel) -->
+  <section id="gallery" class="p-10 text-center bg-white border-t border-gray-200">
+    <div class="max-w-5xl mx-auto">
+      <h2 class="text-4xl font-extrabold text-purple-700 mb-4 fade-in">Galleria</h2>
+      <p class="text-lg text-gray-700 fade-in mb-8">Esplora le nostre creazioni in una rotazione 3D.</p>
+      <div class="carousel-wrapper relative w-full mx-auto h-[360px] fade-in">
+        <div id="carousel-3d" class="carousel-3d">
+          <div style="transform: rotateY(0deg) translateZ(300px); background-color: #eee;"></div>
+          <div style="transform: rotateY(72deg) translateZ(300px); background-color: #ccc;"></div>
+          <div style="transform: rotateY(144deg) translateZ(300px); background-color: #ddd;"></div>
+          <div style="transform: rotateY(216deg) translateZ(300px); background-color: #aaa;"></div>
+          <div style="transform: rotateY(288deg) translateZ(300px); background-color: #999;"></div>
         </div>
-    </section>
-    
-    <section id="gallery" class="p-10 text-center bg-white border-t-4 border-purple-300">
-        <h2 class="text-4xl font-bold text-purple-700">Galleria</h2>
-        <p class="mt-4 text-lg">Esplora le nostre creazioni.</p>
-        <div id="default-carousel" class="relative w-full max-w-4xl mx-auto mt-6">
-            <div class="relative h-64 overflow-hidden rounded-lg">
-                <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                    <img src="fiorigiovanna.jpg" class="absolute block w-full h-full object-cover" alt="Foto Giovanna">
-                </div>
-                <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                    <img src="borsagiovanna.jpg" class="absolute block w-full h-full object-cover" alt="Borsa Giovanna">
-                </div>
-            <button id="carousel-prev" class="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white text-gray-700 p-2 rounded-full shadow hover:bg-purple-200">←</button>
-            <button id="carousel-next" class="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white text-gray-700 p-2 rounded-full shadow hover:bg-purple-200">→</button>
+        <div class="absolute top-1/2 left-0 -translate-y-1/2">
+          <button onclick="rotateCarousel(-1)" class="bg-gray-200 hover:bg-purple-300 text-gray-700 font-bold rounded-full p-3 mx-2 shadow">←</button>
         </div>
-    </section>
-    
-    <section id="contact" class="p-10 text-center bg-purple-50 border-t-4 border-purple-400">
-        <h2 class="text-4xl font-bold text-purple-700">Contattami!</h2>
-        <p class="mt-4 text-lg">Vuoi saperne di più o commissionare un oggetto personalizzato? Scrivimi su WhatsApp!</p>
-        <a href="https://wa.me/1234567890" class="mt-6 inline-block bg-purple-700 text-white px-6 py-3 rounded shadow-md hover:bg-purple-800 text-lg">Chatta su WhatsApp</a>
-    </section>
-    
-    <footer class="bg-purple-700 text-white text-center p-4 mt-10">
-        <p>&copy; 2025 Maglia Creativa. Tutti i diritti riservati.</p>
-    </footer>
+        <div class="absolute top-1/2 right-0 -translate-y-1/2">
+          <button onclick="rotateCarousel(1)" class="bg-gray-200 hover:bg-purple-300 text-gray-700 font-bold rounded-full p-3 mx-2 shadow">→</button>
+        </div>
+      </div>
+      <div id="carousel-caption" class="text-center mt-6 text-gray-700 text-lg font-medium">Colori pastello per ogni stagione</div>
+    </div>
+  </section>
+
+  <section id="about" class="bg-gray-50 py-16 px-6 md:px-20 border-t border-gray-200">
+    <div class="max-w-6xl mx-auto">
+      <button class="flex items-center gap-2 text-3xl md:text-4xl font-bold text-purple-700 mb-6 focus:outline-none" onclick="toggleAbout()">
+        <span>Chi Sono</span>
+        <svg class="w-6 h-6 transform transition-transform" id="aboutArrow" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 9l6 6 6-6"/>
+        </svg>
+      </button>
+      <div id="aboutContent" class="hidden grid md:grid-cols-2 gap-10 items-center">
+        <div>
+          <p class="text-lg text-gray-800 mb-6 leading-relaxed">
+            Sono <strong>Anna</strong>, e creo oggetti a <span class="inline-flex items-center gap-1">artigianale</span> intrecciando storie, non solo fili. Tutto è iniziato da mia nonna, un gomitolo e tanta curiosità. Oggi, ogni mia creazione è fatta a mano con lentezza, passione e un pizzico di magia.
+          </p>
+          <h4 class="text-2xl font-semibold text-purple-600 mb-3">Cosa Credo</h4>
+          <p class="text-lg text-gray-800 leading-relaxed">
+            Lavoro con <span class="inline-flex items-center gap-1">sostenibili</span> materiali, rispetto per l’ambiente e attenzione ai dettagli. Ogni pezzo è <span class="inline-flex items-center gap-1">unico</span>, nato per durare e raccontare una storia vera.
+          </p>
+        </div>
+        <div>
+          <img src="fotogiovanna.jpg" alt="Mani che lavorano" class="rounded-xl shadow-lg w-full object-cover">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contattami -->
+  <section id="contact" class="p-10 text-center bg-purple-50 border-t border-gray-200 fade-in">
+    <div class="max-w-2xl mx-auto">
+      <h2 class="text-4xl font-extrabold text-purple-700">Contattami!</h2>
+      <p class="mt-4 text-lg text-gray-700">Vuoi saperne di più o commissionare un oggetto personalizzato? Scrivimi su WhatsApp!</p>
+      <a href="https://wa.me/1234567890" class="mt-6 inline-block bg-purple-700 text-white px-6 py-3 rounded shadow-md hover:bg-purple-800 text-lg">Chatta su WhatsApp</a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-purple-700 text-white text-center p-4 mt-10">
+    <p>&copy; 2025 Maglia Creativa. Tutti i diritti riservati.</p>
+  </footer>
+
+  <!-- Script -->
+  <script>
+    let angle = 0;
+    const carousel = document.getElementById('carousel-3d');
+    function rotateCarousel(dir) {
+      angle += dir * -72;
+      if (carousel) {
+        carousel.style.transform = `translateZ(-300px) rotateY(${angle}deg)`;
+        const captions = [
+          "Colori pastello per ogni stagione",
+          "Accessori unici per la tua casa",
+          "Dettagli curati e cuciti a mano",
+          "Design originale e funzionale",
+          "Fili intrecciati con amore"
+        ];
+        const index = ((angle / -72) % 5 + 5) % 5;
+        const captionEl = document.getElementById('carousel-caption');
+        if (captionEl) captionEl.textContent = captions[index];
+      }
+    }
+    setInterval(() => rotateCarousel(1), 4000);
+
+    function toggleMenu() {
+      const menu = document.getElementById('menu');
+      const overlay = document.getElementById('overlay');
+      menu.classList.toggle('translate-x-full');
+      menu.classList.toggle('translate-x-0');
+      overlay.classList.toggle('hidden');
+    }
+
+    window.addEventListener('scroll', () => {
+      document.querySelectorAll('.fade-in').forEach(el => {
+        const rect = el.getBoundingClientRect();
+        if (rect.top < window.innerHeight - 80) {
+          el.classList.add('visible');
+        }
+      });
+    });
+
+    function toggleAbout() {
+      const aboutContent = document.getElementById('aboutContent');
+      const aboutArrow = document.getElementById('aboutArrow');
+      aboutContent.classList.toggle('hidden');
+      aboutArrow.classList.toggle('rotate-180');
+    }
+
+    window.addEventListener('load', () => {
+      rotateCarousel(0);
+      document.dispatchEvent(new Event('scroll'));
+    });
+  </script>
 </body>
 </html>
