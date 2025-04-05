@@ -1,42 +1,48 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Maglia Creativa</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     /* 3D Carousel Styles */
     .carousel-wrapper {
       perspective: 1000px;
+      width: 100%;
+      max-width: 360px;
+      height: 360px;
+      margin: 0 auto;
+      overflow: hidden;
     }
-    $1
-  width: 360px;
-  height: 360px;
-  margin: 0 auto; /* Center horizontally in the wrapper */
-  transform-style: preserve-3d;
-  transform: translateZ(-300px) rotateY(0deg);
-  transition: transform 1s ease;
-$3
-
+    .carousel-3d {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transform-style: preserve-3d;
+      transform: translateZ(-300px) rotateY(0deg);
+      transition: transform 1s ease;
+      left: 0;
+      top: 0;
+      margin: 0 auto;
+    }
     .carousel-3d > div {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 240px;
-  height: 320px;
-  margin-left: -120px;
-  margin-top: -160px;
-  background: white;
-  border-radius: 0.75rem;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 2rem;
-  backface-visibility: hidden;
-}
-
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 240px;
+      height: 320px;
+      margin-left: -120px;
+      margin-top: -160px;
+      background: #e5e7eb;
+      border-radius: 0.75rem;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      backface-visibility: hidden;
+    }
 
     /* Fade-in Scroll Animation */
     .fade-in {
@@ -51,15 +57,17 @@ $3
   </style>
 </head>
 <body class="bg-gray-100 text-gray-900 font-sans overflow-x-hidden">
+
   <!-- Overlay + Menu Laterale (Slide-in) -->
   <div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 hidden z-40" onclick="toggleMenu()"></div>
+
   <nav id="menu" class="fixed top-0 right-0 w-64 h-full bg-purple-700 text-white transform translate-x-full transition-transform duration-300 flex flex-col items-center p-6 z-50 shadow-lg">
     <button class="self-end text-2xl mb-4" onclick="toggleMenu()">✕</button>
     <ul class="w-full text-lg text-center space-y-6">
-      <li><a href="#hero" class="block hover:bg-purple-600 px-4 py-2 rounded" onclick="toggleMenu()">Home</a></li>
-      <li><a href="#about" class="block hover:bg-purple-600 px-4 py-2 rounded" onclick="toggleMenu()">Chi Sono</a></li>
-      <li><a href="#gallery" class="block hover:bg-purple-600 px-4 py-2 rounded" onclick="toggleMenu()">Galleria</a></li>
-      <li><a href="#contact" class="block hover:bg-purple-600 px-4 py-2 rounded" onclick="toggleMenu()">Contattami!</a></li>
+      <li><a href="#hero"    class="block hover:bg-purple-600 px-4 py-2 rounded" onclick="closeMenu()">Home</a></li>
+      <li><a href="#about"   class="block hover:bg-purple-600 px-4 py-2 rounded" onclick="closeMenu()">Chi Sono</a></li>
+      <li><a href="#gallery" class="block hover:bg-purple-600 px-4 py-2 rounded" onclick="closeMenu()">Galleria</a></li>
+      <li><a href="#contact" class="block hover:bg-purple-600 px-4 py-2 rounded" onclick="closeMenu()">Contattami!</a></li>
     </ul>
   </nav>
 
@@ -67,8 +75,8 @@ $3
   <header class="bg-purple-700 text-white p-4 fixed w-full top-0 flex justify-between items-center z-50 shadow-md overflow-x-hidden">
     <h1 class="text-2xl font-bold ml-4">Maglia Creativa</h1>
     <nav class="hidden md:flex space-x-6 mr-4">
-      <a href="#hero" class="hover:underline">Home</a>
-      <a href="#about" class="hover:underline">Chi Sono</a>
+      <a href="#hero"    class="hover:underline">Home</a>
+      <a href="#about"   class="hover:underline">Chi Sono</a>
       <a href="#gallery" class="hover:underline">Galleria</a>
       <a href="#contact" class="hover:underline">Contattami</a>
     </nav>
@@ -78,24 +86,33 @@ $3
   <!-- Hero Section -->
   <section id="hero" class="relative bg-cover bg-center min-h-screen pt-32 flex items-center justify-center px-6 overflow-hidden">
     <div class="absolute inset-0">
-  <img src="heroGiovanna.jpg" alt="Hero" class="w-full h-full object-cover">
+      <img src="heroGiovanna.jpg" alt="Hero" class="w-full h-full object-cover">
       <div class="absolute inset-0 bg-black opacity-50"></div>
-</div>
+    </div>
     <div class="relative z-10 text-center max-w-3xl mx-auto space-y-6">
-    <div class="max-w-5xl mx-auto">
-      <h2 class="text-4xl md:text-5xl font-extrabold text-white" style="line-height: 1.2;">Benvenuti su Maglia Creativa</h2>
-      <p class="text-base md:text-lg mt-4 text-white" style="max-width: 700px; margin: 0 auto;">
-        Esplora la fusione tra tradizione artigianale e creatività moderna. Ogni capo racconta una storia fatta a mano, pensata per durare e scaldare.
-      </p>
+      <div class="max-w-5xl mx-auto">
+        <h2 class="text-4xl md:text-5xl font-extrabold text-white" style="line-height: 1.2;">
+          Benvenuti su Maglia Creativa
+        </h2>
+        <p class="text-base md:text-lg mt-4 text-white" style="max-width: 700px; margin: 0 auto;">
+          Esplora la fusione tra tradizione artigianale e creatività moderna.
+          Ogni capo racconta una storia fatta a mano, pensata per durare e scaldare.
+        </p>
+      </div>
     </div>
   </section>
 
-<section id="promo" class="p-8 text-center bg-purple-50 border-t border-gray-200 fade-in">
+  <!-- Sezione Promozione -->
+  <section id="promo" class="p-8 text-center bg-purple-50 border-t border-gray-200 fade-in">
     <div class="max-w-5xl mx-auto">
-      <h2 class="text-3xl md:text-4xl font-bold text-purple-700 mb-4">Tradizione &amp; Stile</h2>
+      <h2 class="text-3xl md:text-4xl font-bold text-purple-700 mb-4">
+        Tradizione &amp; Stile
+      </h2>
       <p class="text-lg text-gray-700 leading-relaxed max-w-3xl mx-auto">
-        Coniughiamo materiali di altissima qualità e un approccio artigianale per offrirti creazioni in maglia uniche, confortevoli e durature.
-        Ogni filo intreccia passione, cura e un tocco di magia, per aggiungere un pizzico di calore alla tua vita.
+        Coniughiamo materiali di altissima qualità e un approccio artigianale
+        per offrirti creazioni in maglia uniche, confortevoli e durature.
+        Ogni filo intreccia passione, cura e un tocco di magia, per aggiungere
+        un pizzico di calore alla tua vita.
       </p>
     </div>
   </section>
@@ -105,13 +122,16 @@ $3
     <div class="max-w-5xl mx-auto">
       <h2 class="text-4xl font-extrabold text-purple-700 mb-4 fade-in">Galleria</h2>
       <p class="text-lg text-gray-700 fade-in mb-8">Esplora le nostre creazioni in una rotazione 3D.</p>
-      <div class="carousel-wrapper relative w-full max-w-[360px] mx-auto h-[360px] overflow-hidden fade-in">
+      <div class="carousel-wrapper fade-in">
         <div id="carousel-3d" class="carousel-3d">
-          <div style="transform: rotateY(0deg) translateZ(300px); background-color: #e5e7eb;"></div>
-          <div style="transform: rotateY(72deg) translateZ(300px); background-color: #e5e7eb;"></div>
-          <div style="transform: rotateY(144deg) translateZ(300px); background-color: #e5e7eb;"></div>
-          <div style="transform: rotateY(216deg) translateZ(300px); background-color: #e5e7eb;"></div>
-          <div style="transform: rotateY(288deg) translateZ(300px); background-color: #e5e7eb;"></div>
+          <div style="transform: rotateY(0deg) translateZ(300px);">
+            <img src="fioriGiovanna.jpg" alt="Fiori Giovanna" class="w-full h-full object-cover rounded-xl" />
+          </div>
+          <div style="transform: rotateY(60deg) translateZ(300px); background-color: #e5e7eb;">2</div>
+          <div style="transform: rotateY(120deg) translateZ(300px); background-color: #e5e7eb;">3</div>
+          <div style="transform: rotateY(180deg) translateZ(300px); background-color: #e5e7eb;">4</div>
+          <div style="transform: rotateY(240deg) translateZ(300px); background-color: #e5e7eb;">5</div>
+          <div style="transform: rotateY(300deg) translateZ(300px); background-color: #e5e7eb;">6</div>
         </div>
         <div class="absolute top-1/2 left-0 -translate-y-1/2">
           <button onclick="rotateCarousel(-1)" class="bg-gray-200 hover:bg-purple-300 text-gray-700 font-bold rounded-full p-3 mx-2 shadow">←</button>
@@ -120,7 +140,9 @@ $3
           <button onclick="rotateCarousel(1)" class="bg-gray-200 hover:bg-purple-300 text-gray-700 font-bold rounded-full p-3 mx-2 shadow">→</button>
         </div>
       </div>
-      <div id="carousel-caption" class="text-center mt-6 text-gray-700 text-lg font-medium">Colori pastello per ogni stagione</div>
+      <div id="carousel-caption" class="text-center mt-6 text-gray-700 text-lg font-medium">
+        Colori pastello per ogni stagione
+      </div>
     </div>
   </section>
 
@@ -168,17 +190,21 @@ $3
     let angle = 0;
     const carousel = document.getElementById('carousel-3d');
     function rotateCarousel(dir) {
-      angle += dir * -72;
+      // Ora 6 item => rotate by 60 deg.
+      angle += dir * -60;
       if (carousel) {
         carousel.style.transform = `translateZ(-300px) rotateY(${angle}deg)`;
+        // 6 didascalie corrispondenti
         const captions = [
-          "Colori pastello per ogni stagione",
+          "Delicati fiori a maglia",
           "Accessori unici per la tua casa",
           "Dettagli curati e cuciti a mano",
           "Design originale e funzionale",
-          "Fili intrecciati con amore"
+          "Fili intrecciati con amore",
+          "Colori che scaldano il cuore"
         ];
-        const index = ((angle / -72) % 5 + 5) % 5;
+        // Invece di mod 5, usiamo mod 6
+        const index = ((angle / -60) % 6 + 6) % 6;
         const captionEl = document.getElementById('carousel-caption');
         if (captionEl) captionEl.textContent = captions[index];
       }
@@ -186,20 +212,25 @@ $3
     setInterval(() => rotateCarousel(1), 4000);
 
     function toggleMenu() {
-  const menu = document.getElementById('menu');
-  const overlay = document.getElementById('overlay');
-  const isHidden = menu.classList.contains('translate-x-full');
-  if (isHidden) {
-    menu.classList.remove('translate-x-full');
-    menu.classList.add('translate-x-0');
-    
-    overlay.classList.remove('hidden');
-  } else {
-    menu.classList.add('translate-x-full');
-    overlay.classList.add('hidden');
-    
-  }
-}
+      const menu = document.getElementById('menu');
+      const overlay = document.getElementById('overlay');
+      const isHidden = menu.classList.contains('translate-x-full');
+      if (isHidden) {
+        menu.classList.remove('translate-x-full');
+        menu.classList.add('translate-x-0');
+        overlay.classList.remove('hidden');
+      } else {
+        menu.classList.add('translate-x-full');
+        overlay.classList.add('hidden');
+      }
+    }
+
+    function closeMenu() {
+      const menu = document.getElementById('menu');
+      const overlay = document.getElementById('overlay');
+      menu.classList.add('translate-x-full');
+      overlay.classList.add('hidden');
+    }
 
     window.addEventListener('scroll', () => {
       document.querySelectorAll('.fade-in').forEach(el => {
