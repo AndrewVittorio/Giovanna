@@ -59,10 +59,10 @@
 <body class="bg-gray-100 text-gray-900 font-sans overflow-x-hidden">
 
   <!-- Overlay + Menu Laterale (Slide-in) -->
-  <div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 hidden z-40" onclick="toggleMenu()"></div>
+  <div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 hidden z-40" onclick="closeMenu()"></div>
 
   <nav id="menu" class="fixed top-0 right-0 w-64 h-full bg-purple-700 text-white transform translate-x-full transition-transform duration-300 flex flex-col items-center p-6 z-50 shadow-lg">
-    <button class="self-end text-2xl mb-4" onclick="toggleMenu()">✕</button>
+    <button class="self-end text-2xl mb-4" onclick="closeMenu()">✕</button>
     <ul class="w-full text-lg text-center space-y-6">
       <li><a href="#hero"    class="block hover:bg-purple-600 px-4 py-2 rounded" onclick="closeMenu()">Home</a></li>
       <li><a href="#about"   class="block hover:bg-purple-600 px-4 py-2 rounded" onclick="closeMenu()">Chi Sono</a></li>
