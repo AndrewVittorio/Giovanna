@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Maglia Creativa</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
@@ -22,8 +22,6 @@
       transform-style: preserve-3d;
       transform: translateZ(-300px) rotateY(0deg);
       transition: transform 1s ease;
-      left: 0;
-      top: 0;
       margin: 0 auto;
     }
     .carousel-3d > div {
@@ -43,7 +41,6 @@
       font-size: 2rem;
       backface-visibility: hidden;
     }
-
     /* Fade-in Scroll Animation */
     .fade-in {
       opacity: 0;
@@ -59,20 +56,27 @@
 <body class="bg-gray-100 text-gray-900 font-sans overflow-x-hidden">
 
   <!-- Overlay + Menu Laterale (Slide-in) -->
-  <div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 hidden z-40" onclick="closeMenu()"></div>
+  <div id="overlay"
+       class="fixed inset-0 bg-black bg-opacity-50 hidden z-40">
+  </div>
 
-  <nav id="menu" class="fixed top-0 right-0 w-64 h-full bg-purple-700 text-white transform translate-x-full transition-transform duration-300 flex flex-col items-center p-6 z-50 shadow-lg">
-    <button class="self-end text-2xl mb-4" onclick="closeMenu()">✕</button>
+  <nav id="menu"
+       class="fixed top-0 right-0 w-64 h-full bg-purple-700 text-white
+              transform translate-x-full transition-transform duration-300
+              flex flex-col items-center p-6 z-50 shadow-lg">
+    <button id="btnCloseMenu"
+            class="self-end text-2xl mb-4">✕</button>
     <ul class="w-full text-lg text-center space-y-6">
-      <li><a href="#hero"    class="block hover:bg-purple-600 px-4 py-2 rounded" onclick="closeMenu()">Home</a></li>
-      <li><a href="#about"   class="block hover:bg-purple-600 px-4 py-2 rounded" onclick="closeMenu()">Chi Sono</a></li>
-      <li><a href="#gallery" class="block hover:bg-purple-600 px-4 py-2 rounded" onclick="closeMenu()">Galleria</a></li>
-      <li><a href="#contact" class="block hover:bg-purple-600 px-4 py-2 rounded" onclick="closeMenu()">Contattami!</a></li>
+      <li><a href="#hero"    class="block hover:bg-purple-600 px-4 py-2 rounded link-internal">Home</a></li>
+      <li><a href="#about"   class="block hover:bg-purple-600 px-4 py-2 rounded link-internal">Chi Sono</a></li>
+      <li><a href="#gallery" class="block hover:bg-purple-600 px-4 py-2 rounded link-internal">Galleria</a></li>
+      <li><a href="#contact" class="block hover:bg-purple-600 px-4 py-2 rounded link-internal">Contattami!</a></li>
     </ul>
   </nav>
 
   <!-- Header + Navbar Desktop -->
-  <header class="bg-purple-700 text-white p-4 fixed w-full top-0 flex justify-between items-center z-50 shadow-md overflow-x-hidden">
+  <header class="bg-purple-700 text-white p-4 fixed w-full top-0 flex
+                 justify-between items-center z-50 shadow-md overflow-x-hidden">
     <h1 class="text-2xl font-bold ml-4">Maglia Creativa</h1>
     <nav class="hidden md:flex space-x-6 mr-4">
       <a href="#hero"    class="hover:underline">Home</a>
@@ -80,21 +84,27 @@
       <a href="#gallery" class="hover:underline">Galleria</a>
       <a href="#contact" class="hover:underline">Contattami</a>
     </nav>
-    <button class="md:hidden text-2xl mr-4 shrink-0" onclick="toggleMenu()">☰</button>
+    <button id="btnOpenMenu"
+            class="md:hidden text-2xl mr-4 shrink-0">☰</button>
   </header>
 
   <!-- Hero Section -->
-  <section id="hero" class="relative bg-cover bg-center min-h-screen pt-32 flex items-center justify-center px-6 overflow-hidden">
+  <section id="hero"
+           class="relative bg-cover bg-center min-h-screen pt-32 flex
+                  items-center justify-center px-6 overflow-hidden">
     <div class="absolute inset-0">
-      <img src="heroGiovanna.jpg" alt="Hero" class="w-full h-full object-cover">
+      <img src="heroGiovanna.jpg" alt="Hero"
+           class="w-full h-full object-cover">
       <div class="absolute inset-0 bg-black opacity-50"></div>
     </div>
     <div class="relative z-10 text-center max-w-3xl mx-auto space-y-6">
       <div class="max-w-5xl mx-auto">
-        <h2 class="text-4xl md:text-5xl font-extrabold text-white" style="line-height: 1.2;">
+        <h2 class="text-4xl md:text-5xl font-extrabold text-white"
+            style="line-height: 1.2;">
           Benvenuti su Maglia Creativa
         </h2>
-        <p class="text-base md:text-lg mt-4 text-white" style="max-width: 700px; margin: 0 auto;">
+        <p class="text-base md:text-lg mt-4 text-white"
+           style="max-width: 700px; margin: 0 auto;">
           Esplora la fusione tra tradizione artigianale e creatività moderna.
           Ogni capo racconta una storia fatta a mano, pensata per durare e scaldare.
         </p>
@@ -125,7 +135,8 @@
       <div class="carousel-wrapper fade-in">
         <div id="carousel-3d" class="carousel-3d">
           <div style="transform: rotateY(0deg) translateZ(300px);">
-            <img src="fioriGiovanna.jpg" alt="Fiori Giovanna" class="w-full h-full object-cover rounded-xl" />
+            <img src="fioriGiovanna.jpg" alt="Fiori Giovanna"
+                 class="w-full h-full object-cover rounded-xl" />
           </div>
           <div style="transform: rotateY(60deg) translateZ(300px); background-color: #e5e7eb;">2</div>
           <div style="transform: rotateY(120deg) translateZ(300px); background-color: #e5e7eb;">3</div>
@@ -134,13 +145,22 @@
           <div style="transform: rotateY(300deg) translateZ(300px); background-color: #e5e7eb;">6</div>
         </div>
         <div class="absolute top-1/2 left-0 -translate-y-1/2">
-          <button onclick="rotateCarousel(-1)" class="bg-gray-200 hover:bg-purple-300 text-gray-700 font-bold rounded-full p-3 mx-2 shadow">←</button>
+          <button id="btnCarouselPrev"
+                  class="bg-gray-200 hover:bg-purple-300 text-gray-700 font-bold
+                         rounded-full p-3 mx-2 shadow">
+            ←
+          </button>
         </div>
         <div class="absolute top-1/2 right-0 -translate-y-1/2">
-          <button onclick="rotateCarousel(1)" class="bg-gray-200 hover:bg-purple-300 text-gray-700 font-bold rounded-full p-3 mx-2 shadow">→</button>
+          <button id="btnCarouselNext"
+                  class="bg-gray-200 hover:bg-purple-300 text-gray-700 font-bold
+                         rounded-full p-3 mx-2 shadow">
+            →
+          </button>
         </div>
       </div>
-      <div id="carousel-caption" class="text-center mt-6 text-gray-700 text-lg font-medium">
+      <div id="carousel-caption"
+           class="text-center mt-6 text-gray-700 text-lg font-medium">
         Colori pastello per ogni stagione
       </div>
     </div>
@@ -148,24 +168,33 @@
 
   <section id="about" class="bg-gray-50 py-16 px-6 md:px-20 border-t border-gray-200">
     <div class="max-w-6xl mx-auto">
-      <button class="flex items-center gap-2 text-3xl md:text-4xl font-bold text-purple-700 mb-6 focus:outline-none" onclick="toggleAbout()">
+      <button class="flex items-center gap-2 text-3xl md:text-4xl font-bold text-purple-700 mb-6 focus:outline-none" id="btnToggleAbout">
         <span>Chi Sono</span>
-        <svg class="w-6 h-6 transform transition-transform" id="aboutArrow" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+        <svg class="w-6 h-6 transform transition-transform" id="aboutArrow" fill="none"
+             stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"
+             stroke-linecap="round" stroke-linejoin="round">
           <path d="M6 9l6 6 6-6"/>
         </svg>
       </button>
       <div id="aboutContent" class="hidden grid md:grid-cols-2 gap-10 items-center">
         <div>
           <p class="text-lg text-gray-800 mb-6 leading-relaxed">
-            Sono <strong>Anna</strong>, e creo oggetti a <span class="inline-flex items-center gap-1">artigianale</span> intrecciando storie, non solo fili. Tutto è iniziato da mia nonna, un gomitolo e tanta curiosità. Oggi, ogni mia creazione è fatta a mano con lentezza, passione e un pizzico di magia.
+            Sono <strong>Anna</strong>, e creo oggetti a <span class="inline-flex items-center gap-1">artigianale</span>
+            intrecciando storie, non solo fili. Tutto è iniziato da mia nonna,
+            un gomitolo e tanta curiosità. Oggi, ogni mia creazione è fatta
+            a mano con lentezza, passione e un pizzico di magia.
           </p>
           <h4 class="text-2xl font-semibold text-purple-600 mb-3">Cosa Credo</h4>
           <p class="text-lg text-gray-800 leading-relaxed">
-            Lavoro con <span class="inline-flex items-center gap-1">sostenibili</span> materiali, rispetto per l’ambiente e attenzione ai dettagli. Ogni pezzo è <span class="inline-flex items-center gap-1">unico</span>, nato per durare e raccontare una storia vera.
+            Lavoro con <span class="inline-flex items-center gap-1">sostenibili</span>
+            materiali, rispetto per l’ambiente e attenzione ai dettagli. Ogni
+            pezzo è <span class="inline-flex items-center gap-1">unico</span>,
+            nato per durare e raccontare una storia vera.
           </p>
         </div>
         <div>
-          <img src="fotogiovanna.jpg" alt="Mani che lavorano" class="rounded-xl shadow-lg w-full object-cover">
+          <img src="fotogiovanna.jpg" alt="Mani che lavorano"
+               class="rounded-xl shadow-lg w-full object-cover">
         </div>
       </div>
     </div>
@@ -176,7 +205,11 @@
     <div class="max-w-2xl mx-auto">
       <h2 class="text-4xl font-extrabold text-purple-700">Contattami!</h2>
       <p class="mt-4 text-lg text-gray-700">Vuoi saperne di più o commissionare un oggetto personalizzato? Scrivimi su WhatsApp!</p>
-      <a href="https://wa.me/1234567890" class="mt-6 inline-block bg-purple-700 text-white px-6 py-3 rounded shadow-md hover:bg-purple-800 text-lg">Chatta su WhatsApp</a>
+      <a href="https://wa.me/1234567890"
+         class="mt-6 inline-block bg-purple-700 text-white px-6 py-3
+                rounded shadow-md hover:bg-purple-800 text-lg">
+        Chatta su WhatsApp
+      </a>
     </div>
   </section>
 
@@ -188,13 +221,13 @@
   <!-- Script -->
   <script>
     let angle = 0;
-    const carousel = document.getElementById('carousel-3d');
+
+    // 1) Carosello 3D
     function rotateCarousel(dir) {
-      // Ora 6 item => rotate by 60 deg.
-      angle += dir * -60;
+      angle += dir * -60; // 6 items => step di 60°
+      const carousel = document.getElementById('carousel-3d');
       if (carousel) {
         carousel.style.transform = `translateZ(-300px) rotateY(${angle}deg)`;
-        // 6 didascalie corrispondenti
         const captions = [
           "Delicati fiori a maglia",
           "Accessori unici per la tua casa",
@@ -203,55 +236,88 @@
           "Fili intrecciati con amore",
           "Colori che scaldano il cuore"
         ];
-        // Invece di mod 5, usiamo mod 6
         const index = ((angle / -60) % 6 + 6) % 6;
         const captionEl = document.getElementById('carousel-caption');
         if (captionEl) captionEl.textContent = captions[index];
       }
     }
-    setInterval(() => rotateCarousel(1), 4000);
 
-    function toggleMenu() {
+    // 2) Menu Aperto/Chiuso
+    function openMenu() {
       const menu = document.getElementById('menu');
       const overlay = document.getElementById('overlay');
-      const isHidden = menu.classList.contains('translate-x-full');
-      if (isHidden) {
-        menu.classList.remove('translate-x-full');
-        menu.classList.add('translate-x-0');
-        overlay.classList.remove('hidden');
-      } else {
-        menu.classList.add('translate-x-full');
-        overlay.classList.add('hidden');
-      }
+      menu.classList.remove('translate-x-full');
+      menu.classList.add('translate-x-0');
+      overlay.classList.remove('hidden');
     }
-
     function closeMenu() {
       const menu = document.getElementById('menu');
       const overlay = document.getElementById('overlay');
       menu.classList.add('translate-x-full');
+      menu.classList.remove('translate-x-0');
       overlay.classList.add('hidden');
     }
 
-    window.addEventListener('scroll', () => {
+    // 3) Fade In on Scroll
+    function handleScrollFadeIn() {
       document.querySelectorAll('.fade-in').forEach(el => {
         const rect = el.getBoundingClientRect();
         if (rect.top < window.innerHeight - 80) {
           el.classList.add('visible');
         }
       });
-    });
+    }
 
-    function toggleAbout() {
+    // 4) Toggle About
+    function toggleAboutContent() {
       const aboutContent = document.getElementById('aboutContent');
       const aboutArrow = document.getElementById('aboutArrow');
       aboutContent.classList.toggle('hidden');
       aboutArrow.classList.toggle('rotate-180');
     }
 
+    // 5) Al caricamento pagina
     window.addEventListener('load', () => {
       rotateCarousel(0);
-      document.dispatchEvent(new Event('scroll'));
+      handleScrollFadeIn();
+    });
+
+    // 6) Allo scroll
+    window.addEventListener('scroll', handleScrollFadeIn);
+
+    // 7) Inizializzo vari handle
+    document.addEventListener('DOMContentLoaded', function() {
+      // Menu
+      const btnOpenMenu = document.getElementById('btnOpenMenu');
+      const btnCloseMenu = document.getElementById('btnCloseMenu');
+      const overlay = document.getElementById('overlay');
+      btnOpenMenu.addEventListener('click', openMenu);
+      btnCloseMenu.addEventListener('click', closeMenu);
+
+      // Clic su link interno
+      document.querySelectorAll('.link-internal').forEach(link => {
+        link.addEventListener('click', function(e) {
+          e.preventDefault();
+          closeMenu();
+          // Passa l’ancora dopo la chiusura del menu
+          const href = this.getAttribute('href');
+          setTimeout(() => {
+            window.location.hash = href;
+          }, 200);
+        });
+      });
+
+      // About
+      const btnToggleAbout = document.getElementById('btnToggleAbout');
+      btnToggleAbout.addEventListener('click', toggleAboutContent);
+
+      // Carosello
+      document.getElementById('btnCarouselPrev')
+        .addEventListener('click', () => rotateCarousel(-1));
+      document.getElementById('btnCarouselNext')
+        .addEventListener('click', () => rotateCarousel(1));
     });
   </script>
 </body>
 </html>
+
