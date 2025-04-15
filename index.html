@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Maglia Creativa</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
@@ -108,7 +108,7 @@
         </p>
       </div>
       <div>
-        <img src="/fotogiovanna.jpg" alt="Mani che lavorano" class="rounded-xl shadow-lg w-full h-[400px] object-cover">
+        <img src="/fotogiovanna.jpg" alt="Mani che lavorano" class="rounded-xl shadow-lg w-full h-[400px] object-cover" />
       </div>
     </div>
   </div>
@@ -132,9 +132,8 @@
   <p>&copy; 2025 Maglia Creativa. Tutti i diritti riservati.</p>
 </footer>
 
-<!-- Script JavaScript -->
+<!-- Script -->
 <script>
-  // Mobile menu
   const menuButton = document.getElementById('menu-button');
   const mobileMenu = document.getElementById('mobile-menu');
   const overlay = document.getElementById('overlay');
@@ -148,7 +147,14 @@
     overlay.classList.add('opacity-0', 'pointer-events-none');
   };
 
-  // Fade-in on scroll
+  // 🔧 Chiudi menu su click link
+  document.querySelectorAll('#mobile-menu a').forEach(link => {
+    link.addEventListener('click', () => {
+      mobileMenu.classList.add('translate-x-full');
+      overlay.classList.add('opacity-0', 'pointer-events-none');
+    });
+  });
+
   const fadeElements = document.querySelectorAll('.animate-fade-up');
   window.addEventListener('scroll', () => {
     fadeElements.forEach(el => {
@@ -159,7 +165,6 @@
   });
   setTimeout(() => window.dispatchEvent(new Event('scroll')), 100);
 
-  // 3D Carousel
   const carousel = document.getElementById('carousel');
   const caption = document.getElementById('caption');
   const items = [
@@ -200,7 +205,6 @@
 
   renderCarousel();
 
-  // About Toggle
   const toggleAbout = document.getElementById('toggle-about');
   const aboutContent = document.getElementById('about-content');
   const arrow = document.getElementById('arrow');
