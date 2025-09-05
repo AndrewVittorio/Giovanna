@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Maglia Creativa</title>
+  <title>Giovy</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     .perspective-1000 { perspective: 1000px; }
@@ -17,7 +17,7 @@
 
 <!-- Header -->
 <header class="bg-purple-700 fixed w-full top-0 flex justify-between items-center z-50 shadow-md px-4 py-4">
-  <h1 class="text-2xl font-bold text-white">Maglia Creativa</h1>
+  <h1 class="text-2xl font-bold text-white">Giovy</h1>
   <nav class="hidden md:flex space-x-6 text-white">
     <a href="#hero" class="hover:underline transition-all">Home</a>
     <a href="#about" class="hover:underline transition-all">Chi Sono</a>
@@ -42,13 +42,11 @@
 <!-- Hero Section -->
 <section id="hero" class="relative min-h-screen pt-16 flex items-center justify-center px-6 overflow-hidden">
   <div class="absolute inset-0">
-    <!-- ✅ Loader robusto: prova più percorsi comuni per l'immagine -->
-    <img id="hero-img" src="GIOVY_home.png" alt="Sfondo Maglia Creativa" class="w-full h-full object-cover" loading="eager" />
-    <!-- 🌓 Leggera oscuratura per staccare il testo dallo sfondo -->
+    <img id="hero-img" src="GIOVY_home.png" alt="Sfondo Giovy" class="w-full h-full object-cover" loading="eager" />
     <div class="absolute inset-0 bg-black/50" aria-hidden="true"></div>
   </div>
   <div class="relative z-10 text-center max-w-3xl mx-auto space-y-6 animate-fade-up">
-    <h2 class="text-4xl md:text-5xl font-extrabold text-white leading-tight">Benvenuti su Maglia</h2>
+    <h2 class="text-4xl md:text-5xl font-extrabold text-white leading-tight">Benvenuti su Giovy</h2>
     <p class="text-lg md:text-xl text-white/90 max-w-2xl mx-auto">
       Esplora la fusione tra tradizione artigianale e creatività moderna. Ogni capo racconta una storia fatta a mano, pensata per durare e scaldare.
     </p>
@@ -124,7 +122,7 @@
 
 <!-- Footer -->
 <footer class="bg-purple-700 text-white text-center py-6">
-  <p>&copy; 2025 Maglia Creativa. Tutti i diritti riservati.</p>
+  <p>&copy; 2025 Giovy. Tutti i diritti riservati.</p>
 </footer>
 
 <!-- Script -->
@@ -141,25 +139,22 @@
   window.addEventListener('scroll', () => { fadeElements.forEach(el => { if (el.getBoundingClientRect().top < window.innerHeight - 80) el.classList.add('visible'); }); });
   setTimeout(() => window.dispatchEvent(new Event('scroll')), 100);
 
-  // 🎯 HERO IMAGE LOADER — Prova più path comuni finché uno carica
   (function() {
     const heroImg = document.getElementById('hero-img');
     const candidates = [
-      'GIOVY_home.png',          // stessa cartella del file HTML
-      '/GIOVY_home.png',         // root del dominio (es. Next/Vite public/)
-      '/images/GIOVY_home.png',  // cartella /images
-      '/assets/GIOVY_home.png'   // cartella /assets
+      'GIOVY_home.png',
+      '/GIOVY_home.png',
+      '/images/GIOVY_home.png',
+      '/assets/GIOVY_home.png'
     ];
-
     function tryLoad(url) {
       return new Promise(resolve => {
         const tester = new Image();
         tester.onload = () => resolve({ ok: true, url });
         tester.onerror = () => resolve({ ok: false, url });
-        tester.src = url + (url.includes('?') ? '&' : '?') + 'v=' + Date.now(); // bust cache
+        tester.src = url + (url.includes('?') ? '&' : '?') + 'v=' + Date.now();
       });
     }
-
     (async () => {
       for (const url of candidates) {
         const res = await tryLoad(url);
@@ -171,7 +166,6 @@
     })();
   })();
 
-  // Carousel 3D
   const carousel = document.getElementById('carousel');
   const caption = document.getElementById('caption');
   const items = [
