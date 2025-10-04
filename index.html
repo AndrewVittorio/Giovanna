@@ -20,8 +20,20 @@
     .perspective-1000 { perspective: 1000px; }
     .transform-style-3d { transform-style: preserve-3d; }
     .backface-hidden { backface-visibility: hidden; }
+
+    /* Animazioni di fade */
     .animate-fade-up { opacity: 0; transform: translateY(20px); transition: all 0.6s ease-out; }
     .animate-fade-up.visible { opacity: 1; transform: translateY(0); }
+
+    /* Zoom per immagine attiva */
+    .carousel-item img {
+      transition: transform 0.8s ease-in-out, box-shadow 0.8s ease-in-out;
+    }
+    .carousel-item.active img {
+      transform: scale(1.1);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+      border: 3px solid rgba(255,255,255,0.5);
+    }
 
     html {
       scroll-behavior: smooth;
@@ -42,8 +54,10 @@
   <button id="menu-button" class="md:hidden text-white" aria-label="Toggle menu">☰</button>
 </header>
 
-<!-- Menu Mobile -->
+<!-- Overlay menu mobile -->
 <div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 transition-opacity opacity-0 pointer-events-none md:hidden"></div>
+
+<!-- Menu mobile -->
 <nav id="mobile-menu" class="fixed top-0 right-0 w-64 h-full bg-purple-700 text-white transform translate-x-full transition-transform duration-300 flex flex-col items-center p-6 z-50 shadow-lg md:hidden">
   <button id="close-menu" class="self-end text-2xl mb-4" aria-label="Close menu">×</button>
   <ul class="w-full text-lg text-center space-y-6">
@@ -54,7 +68,7 @@
   </ul>
 </nav>
 
-<!-- Hero Section -->
+<!-- Hero -->
 <section id="hero" class="relative min-h-[85vh] pt-16 flex flex-col items-center justify-center px-6 overflow-hidden">
   <div class="absolute inset-0">
     <img id="hero-img" src="GIOVY_home.png" alt="Sfondo Giovy" class="w-full h-full object-cover opacity-90" loading="eager" />
@@ -85,7 +99,7 @@
   </div>
 </section>
 
-<!-- Gallery Carousel -->
+<!-- Galleria -->
 <section id="gallery" class="py-16 px-6 bg-gray-100 animate-fade-up">
   <div class="max-w-4xl mx-auto text-center">
     <h2 class="text-3xl md:text-4xl font-bold text-purple-700 mb-6">Galleria</h2>
@@ -129,7 +143,7 @@
   </div>
 </section>
 
-<!-- Contact -->
+<!-- Contatti -->
 <section id="contact" class="py-16 px-6 bg-gray-100 animate-fade-up">
   <div class="max-w-2xl mx-auto text-center">
     <h2 class="text-3xl md:text-4xl font-bold text-purple-700 mb-6">Contattami!</h2>
@@ -149,6 +163,7 @@
 
 <!-- Script -->
 <script>
+  // Menu mobile
   const menuButton = document.getElementById('menu-button');
   const mobileMenu = document.getElementById('mobile-menu');
   const overlay = document.getElementById('overlay');
@@ -157,10 +172,12 @@
   overlay.onclick = closeMenu.onclick = () => { mobileMenu.classList.add('translate-x-full'); overlay.classList.add('opacity-0', 'pointer-events-none'); };
   document.querySelectorAll('#mobile-menu a').forEach(link => link.addEventListener('click', () => { mobileMenu.classList.add('translate-x-full'); overlay.classList.add('opacity-0', 'pointer-events-none'); }));
 
+  // Fade animazioni
   const fadeElements = document.querySelectorAll('.animate-fade-up');
   window.addEventListener('scroll', () => { fadeElements.forEach(el => { if (el.getBoundingClientRect().top < window.innerHeight - 80) el.classList.add('visible'); }); });
   setTimeout(() => window.dispatchEvent(new Event('scroll')), 100);
 
+  // Hero image fallback
   (function() {
     const heroImg = document.getElementById('hero-img');
     const candidates = [
@@ -183,35 +200,37 @@
         if (res.ok) { heroImg.src = res.url; return; }
         console.warn('[Hero img] Non trovato:', res.url);
       }
-      console.error('[Hero img] Nessun percorso valido trovato. Uso fallback.');
       heroImg.src = '/heroGiovanna.jpg';
     })();
   })();
 
+  // Carousel 3D con zoom su item attivo
   const carousel = document.getElementById('carousel');
   const caption = document.getElementById('caption');
   const items = [
+    { image: '/GIOVY_Galleria.Gonna.png', caption: 'Eleganza intrecciata in ogni filo' },
     { image: '/fioriGiovanna.jpg', caption: 'Delicati fiori a maglia' },
     { image: '/placeholder.svg', caption: 'Accessori unici per la tua casa' },
     { image: '/placeholder.svg', caption: 'Dettagli curati e cuciti a mano' },
     { image: '/placeholder.svg', caption: 'Design originale e funzionale' },
     { image: '/placeholder.svg', caption: 'Fili intrecciati con amore' },
-    { image: '/placeholder.svg', caption: 'Colori che scaldano il cuore' },
+    { image: '/placeholder.svg', caption: 'Colori che scaldano il cuore' }
   ];
   let angle = 0, index = 0;
   function renderCarousel() {
     carousel.innerHTML = items.map((item, i) => `
-      <div class="absolute top-1/2 left-1/2 w-[240px] h-[320px] -ml-[120px] -mt-[160px] bg-gray-200 rounded-xl shadow-lg flex items-center justify-center overflow-hidden backface-hidden" style="transform: rotateY(${i * 60}deg) translateZ(300px);">
+      <div class="carousel-item absolute top-1/2 left-1/2 w-[240px] h-[320px] -ml-[120px] -mt-[160px] bg-gray-200 rounded-xl shadow-lg flex items-center justify-center overflow-hidden backface-hidden ${i === index ? 'active' : ''}" style="transform: rotateY(${i * (360 / items.length)}deg) translateZ(300px);">
         <img src="${item.image}" alt="${item.caption}" class="w-full h-full object-cover rounded-xl">
       </div>`).join('');
     carousel.style.transform = `translateZ(-300px) rotateY(${angle}deg)`;
     caption.textContent = items[index].caption;
   }
-  document.getElementById('next').onclick = () => { angle -= 60; index = (index + 1) % items.length; renderCarousel(); };
-  document.getElementById('prev').onclick = () => { angle += 60; index = (index - 1 + items.length) % items.length; renderCarousel(); };
+  document.getElementById('next').onclick = () => { angle -= 360 / items.length; index = (index + 1) % items.length; renderCarousel(); };
+  document.getElementById('prev').onclick = () => { angle += 360 / items.length; index = (index - 1 + items.length) % items.length; renderCarousel(); };
   setInterval(() => document.getElementById('next').click(), 4000);
   renderCarousel();
 
+  // Toggle About
   const toggleAbout = document.getElementById('toggle-about');
   const aboutContent = document.getElementById('about-content');
   const arrow = document.getElementById('arrow');
