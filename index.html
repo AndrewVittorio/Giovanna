@@ -3,92 +3,188 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>GIOVY Handmade Creations</title>
+  <title>Giovy Handmade Creations</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.4.1/dist/tailwind.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+
   <style>
     body {
-      margin: 0;
-      font-family: "Montserrat", sans-serif;
-      background-color: #fff;
-      color: #111;
-      text-align: center;
+      font-family: 'Montserrat', sans-serif;
+      background-color: #fafafa;
+      color: #222;
     }
 
+    /* --- Effetti 3D e animazioni --- */
+    .transform-style-3d {
+      transform-style: preserve-3d;
+    }
+    .backface-hidden {
+      backface-visibility: hidden;
+    }
+    .perspective-1200 {
+      perspective: 1200px;
+    }
+    @keyframes fade-up {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fade-up {
+      animation: fade-up 0.8s ease forwards;
+    }
+
+    /* Smooth hover tilt */
+    .tilt:hover {
+      transform: rotateX(5deg) rotateY(-5deg) scale(1.02);
+      transition: transform 0.4s ease;
+    }
+
+    /* Hero gradient */
     header {
-      padding: 40px 20px 10px;
-    }
-
-    h1 {
-      font-size: 2.2rem;
-      margin-bottom: 5px;
-    }
-
-    p.sottotitolo {
-      font-size: 1.1rem;
-      color: #555;
-      margin-top: 0;
-    }
-
-    section {
-      padding: 40px 20px;
-    }
-
-    #viewer-container {
-      width: 400px;
-      height: 400px;
-      margin: 0 auto;
-      position: relative;
-    }
-
-    canvas {
-      width: 100%;
-      height: 100%;
+      background: linear-gradient(to bottom right, #9333ea, #6d28d9);
     }
   </style>
 </head>
-<body>
-  <header>
-    <h1>GIOVY Handmade Creations</h1>
-    <p class="sottotitolo">Arte, eleganza e passione intrecciate a mano</p>
+
+<body class="text-gray-800">
+  <!-- HERO -->
+  <header class="py-20 text-center text-white shadow-lg">
+    <h1 class="text-5xl font-bold mb-4">GIOVY Handmade Creations</h1>
+    <p class="text-xl opacity-90">Arte, eleganza e passione intrecciate a mano</p>
   </header>
 
-  <section>
-    <h2>Galleria</h2>
-    <p>Esplora le nostre creazioni in una rotazione 3D</p>
-
-    <div id="viewer-container"></div>
+  <!-- CHI SIAMO -->
+  <section id="about" class="py-16 px-6 bg-white text-center animate-fade-up">
+    <div class="max-w-4xl mx-auto">
+      <h2 class="text-3xl font-bold text-purple-700 mb-6">Chi siamo</h2>
+      <p class="text-lg leading-relaxed text-gray-700">
+        Giovy Handmade nasce dalla passione per l’artigianato, la cura dei dettagli e l’amore per i materiali naturali.
+        Ogni creazione è pensata per unire estetica e funzionalità, trasformando semplici fili in piccole opere d’arte.
+      </p>
+    </div>
   </section>
 
-  <script type="module">
-    import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
+  <!-- GALLERIA 3D -->
+  <section id="gallery" class="py-20 px-6 bg-gray-100 animate-fade-up">
+    <div class="max-w-5xl mx-auto text-center">
+      <h2 class="text-3xl font-bold text-purple-700 mb-6">Galleria</h2>
+      <p class="text-lg text-gray-700 mb-12">Esplora le nostre creazioni in una rotazione 3D</p>
 
-    const container = document.getElementById('viewer-container');
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(50, container.clientWidth / container.clientHeight, 0.1, 1000);
-    const renderer = new THREE.WebGLRenderer({ alpha: true });
-    renderer.setSize(container.clientWidth, container.clientHeight);
-    container.appendChild(renderer.domElement);
+      <div class="relative w-full max-w-[460px] h-[460px] mx-auto">
+        <div class="carousel-wrapper perspective-1200 w-full h-full overflow-hidden">
+          <div id="carousel" class="relative w-full h-full transform-style-3d transition-transform duration-1000"></div>
+        </div>
 
-    const texture = new THREE.TextureLoader().load('gonna.png'); // tua immagine qui
-    const geometry = new THREE.PlaneGeometry(3, 2);
-    const material = new THREE.MeshBasicMaterial({ map: texture, transparent: true });
-    const mesh = new THREE.Mesh(geometry, material);
-    scene.add(mesh);
+        <button id="prev" class="absolute top-1/2 -left-6 -translate-y-1/2 bg-white hover:bg-gray-100 text-gray-800 rounded-full p-2 shadow-lg text-2xl">‹</button>
+        <button id="next" class="absolute top-1/2 -right-6 -translate-y-1/2 bg-white hover:bg-gray-100 text-gray-800 rounded-full p-2 shadow-lg text-2xl">›</button>
 
-    camera.position.z = 5;
+        <div id="caption" class="text-center mt-8 text-gray-700 text-lg font-medium"></div>
+      </div>
+    </div>
 
-    function animate() {
-      requestAnimationFrame(animate);
-      mesh.rotation.y += 0.01;
-      renderer.render(scene, camera);
+    <!-- Overlay fullscreen -->
+    <div id="lightbox" class="fixed inset-0 bg-black/80 flex items-center justify-center hidden z-50">
+      <button id="close-lightbox" class="absolute top-6 right-6 text-white text-4xl font-bold cursor-pointer">×</button>
+      <img id="lightbox-img" src="" alt="Immagine ingrandita" class="max-w-[90%] max-h-[90%] rounded-xl shadow-2xl object-contain border border-white/20 transition-transform duration-300 scale-100">
+    </div>
+  </section>
+
+  <!-- CREAZIONI -->
+  <section id="creations" class="py-16 px-6 bg-white text-center animate-fade-up">
+    <div class="max-w-5xl mx-auto">
+      <h2 class="text-3xl font-bold text-purple-700 mb-6">Le nostre creazioni</h2>
+      <p class="text-lg text-gray-700 mb-10">
+        Ogni pezzo è unico: borse, gonne, accessori e decorazioni per la casa realizzati a mano con materiali di alta qualità.
+      </p>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="bg-gray-100 rounded-xl p-6 shadow-md tilt hover:shadow-lg transition">
+          <h3 class="font-semibold text-purple-700 mb-2">Gonne</h3>
+          <p>Un intreccio di eleganza e comfort, pensato per chi ama distinguersi con stile.</p>
+        </div>
+        <div class="bg-gray-100 rounded-xl p-6 shadow-md tilt hover:shadow-lg transition">
+          <h3 class="font-semibold text-purple-700 mb-2">Borse</h3>
+          <p>Design unici e materiali sostenibili per ogni occasione.</p>
+        </div>
+        <div class="bg-gray-100 rounded-xl p-6 shadow-md tilt hover:shadow-lg transition">
+          <h3 class="font-semibold text-purple-700 mb-2">Accessori</h3>
+          <p>Dettagli artigianali che completano il tuo look con un tocco handmade.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTATTI -->
+  <section id="contact" class="py-16 px-6 bg-gray-100 text-center animate-fade-up">
+    <div class="max-w-3xl mx-auto">
+      <h2 class="text-3xl font-bold text-purple-700 mb-6">Contatti</h2>
+      <p class="text-lg text-gray-700 mb-4">Vuoi richiedere una creazione personalizzata o collaborare con noi?</p>
+      <p class="text-lg text-purple-700 font-semibold mb-6">Scrivici a: <a href="mailto:giovyhandmade@gmail.com" class="underline hover:text-purple-800">giovyhandmade@gmail.com</a></p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="py-6 text-center text-gray-600 bg-gray-200 mt-16">
+    <p>© 2025 Giovy Handmade — Tutti i diritti riservati.</p>
+  </footer>
+
+  <script>
+    const carousel = document.getElementById('carousel');
+    const caption = document.getElementById('caption');
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+    const closeLightbox = document.getElementById('close-lightbox');
+
+    // ✅ Galleria aggiornata
+    const items = [
+      { image: 'GIOVY_Galleria.Gonna.png', caption: 'Eleganza intrecciata in ogni filo' },
+      { image: 'GIOVY_Galleria.Borsa.png', caption: 'Stile artigianale, perfetto per ogni occasione' },
+      { image: 'placeholder.svg', caption: 'Accessori unici per la tua casa' },
+      { image: 'placeholder.svg', caption: 'Dettagli curati e cuciti a mano' },
+      { image: 'placeholder.svg', caption: 'Design originale e funzionale' },
+      { image: 'placeholder.svg', caption: 'Fili intrecciati con amore' },
+      { image: 'placeholder.svg', caption: 'Colori che scaldano il cuore' }
+    ];
+
+    let angle = 0, index = 0;
+
+    function renderCarousel() {
+      carousel.innerHTML = items.map((item, i) => `
+        <div class="absolute top-1/2 left-1/2 w-[280px] h-[380px] -ml-[140px] -mt-[190px] bg-gray-200 rounded-xl shadow-lg flex items-center justify-center overflow-hidden backface-hidden cursor-pointer hover:scale-105 transition-transform duration-300" 
+          style="transform: rotateY(${i * (360 / items.length)}deg) translateZ(360px);">
+          <img src="${item.image}" alt="${item.caption}" class="w-full h-full object-cover rounded-xl" data-index="${i}">
+        </div>`).join('');
+      carousel.style.transform = `translateZ(-360px) rotateY(${angle}deg)`;
+      caption.textContent = items[index].caption;
+
+      // Zoom su clic
+      document.querySelectorAll('#carousel img').forEach(img => {
+        img.addEventListener('click', () => {
+          lightboxImg.src = img.src;
+          lightbox.classList.remove('hidden');
+          lightboxImg.classList.add('scale-110');
+          setTimeout(() => lightboxImg.classList.remove('scale-110'), 200);
+        });
+      });
     }
 
-    animate();
+    // Navigazione manuale
+    document.getElementById('next').onclick = () => {
+      angle -= 360 / items.length;
+      index = (index + 1) % items.length;
+      renderCarousel();
+    };
+    document.getElementById('prev').onclick = () => {
+      angle += 360 / items.length;
+      index = (index - 1 + items.length) % items.length;
+      renderCarousel();
+    };
 
-    window.addEventListener('resize', () => {
-      camera.aspect = container.clientWidth / container.clientHeight;
-      camera.updateProjectionMatrix();
-      renderer.setSize(container.clientWidth, container.clientHeight);
-    });
+    // Rotazione automatica
+    setInterval(() => document.getElementById('next').click(), 5000);
+    renderCarousel();
+
+    // Chiusura lightbox
+    closeLightbox.onclick = () => lightbox.classList.add('hidden');
+    lightbox.addEventListener('click', e => { if (e.target === lightbox) lightbox.classList.add('hidden'); });
   </script>
 </body>
 </html>
