@@ -112,6 +112,11 @@
   </div>
 </section>
 
+<!-- Modal immagine ingrandita -->
+<div id="image-modal" class="fixed inset-0 bg-black/80 flex items-center justify-center z-50 hidden">
+  <img id="modal-img" src="" class="max-w-[90%] max-h-[90%] rounded-xl shadow-2xl" />
+</div>
+
 <!-- About -->
 <section id="about" class="py-16 px-6 bg-white animate-fade-up">
   <div class="max-w-4xl mx-auto">
@@ -209,7 +214,20 @@
     carousel.style.transform = `translateZ(-300px) rotateY(${angle}deg)`;
     caption.textContent = items[index].caption;
   }
-  document.getElementById('next').onclick = () => { angle -= 360 / items.length; index = (index + 1) % items.length; renderCarousel(); };
+  document.getElementById('next').onclick = () => { angle -= 360 / items.length; index = (index + 1) % items.length; renderCarousel();
+
+  // Apertura modal al click sulle immagini
+  carousel.addEventListener('click', e => {
+    const img = e.target.closest('.carousel-item')?.querySelector('img');
+    if (!img) return;
+    document.getElementById('modal-img').src = img.src;
+    document.getElementById('image-modal').classList.remove('hidden');
+  });
+
+  // Chiusura modal cliccando fuori
+  document.getElementById('image-modal').onclick = () => {
+    document.getElementById('image-modal').classList.add('hidden');
+  }; };
   document.getElementById('prev').onclick = () => { angle += 360 / items.length; index = (index - 1 + items.length) % items.length; renderCarousel(); };
   setInterval(() => document.getElementById('next').click(), 4000);
   renderCarousel();
