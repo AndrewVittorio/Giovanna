@@ -31,9 +31,12 @@
       transform: translateY(0);
     }
 
+    /* Impostazioni per garantire che le immagini si adattino senza righe bianche */
     .carousel-item img {
       transition: transform .8s ease, box-shadow .8s ease;
       object-fit: cover; /* Rimuove la riga bianca */
+      width: 100%;  /* Garantisce che l'immagine occupi l'intera larghezza */
+      height: 100%; /* Garantisce che l'immagine occupi l'intera altezza */
     }
 
     .carousel-item.active img {
