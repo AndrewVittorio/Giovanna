@@ -33,6 +33,7 @@
 
     .carousel-item img {
       transition: transform .8s ease, box-shadow .8s ease;
+      object-fit: cover; /* Rimuove la riga bianca */
     }
 
     .carousel-item.active img {
@@ -189,8 +190,6 @@ const modal = document.getElementById('image-modal');
 const modalImg = document.getElementById('modal-img');
 
 const images = Array.from({length:20},(_,i)=>`GIOVY_Galleria (${i+1}).jpeg`);
-const width = 240;
-const count = images.length;
 let index = 0;
 
 function renderCarousel(){
@@ -202,12 +201,12 @@ function renderCarousel(){
 }
 
 document.getElementById('next').onclick = () => {
-  index = (index + 1) % count;
+  index = (index + 1) % images.length;
   renderCarousel();
 };
 
 document.getElementById('prev').onclick = () => {
-  index = (index - 1 + count) % count;
+  index = (index - 1 + images.length) % images.length;
   renderCarousel();
 };
 
@@ -220,7 +219,6 @@ carousel.onclick = e => {
 
 modal.onclick = () => modal.classList.add('hidden');
 
-setInterval(() => document.getElementById('next').click(), 4000);
 renderCarousel();
 </script>
 
