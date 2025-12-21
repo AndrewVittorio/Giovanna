@@ -14,6 +14,7 @@
     }
 
     body { min-height: 100vh; }
+    html { scroll-behavior: smooth; }
 
     .font-kurale { font-family: 'Kurale', serif; }
 
@@ -31,16 +32,24 @@
       transform: translateY(0);
     }
 
+    /* === CAROUSEL FIX ANTI-SCHIACCIAMENTO === */
+    .carousel-item {
+      transition: transform 1s ease, opacity 1s ease;
+    }
+
+    .carousel-item:not(.active) {
+      opacity: 0.6;
+    }
+
     .carousel-item img {
       transition: transform .8s ease, box-shadow .8s ease;
+      transform: scaleX(1.15); /* compensazione prospettiva */
     }
 
     .carousel-item.active img {
       transform: scale(1.1);
       box-shadow: 0 20px 40px rgba(0,0,0,.45);
     }
-
-    html { scroll-behavior: smooth; }
   </style>
 </head>
 
@@ -177,46 +186,40 @@ const modalImg = document.getElementById('modal-img');
 const images = Array.from({length:20},(_,i)=>`GIOVY_Galleria (${i+1}).jpeg`);
 const width = 240;
 const count = images.length;
-const radius = Math.round((width / 2) / Math.tan(Math.PI / (count / 2))); // Aumenta la separazione tra le immagini
-const imageSpacing = 20; // Spazio tra le immagini
+
+/* +60 = meno distorsione laterale */
+const radius = Math.round((width/2)/Math.tan(Math.PI/count)) + 60;
 
 let angle = 0, index = 0;
 
-function renderCarousel() {
-  carousel.innerHTML = images.map((src,i) => `
+function renderCarousel(){
+  carousel.innerHTML = images.map((src,i)=>`
     <div class="carousel-item absolute top-1/2 left-1/2 w-[240px] h-[320px]
       -ml-[120px] -mt-[160px] rounded-xl overflow-hidden shadow-lg
-      ${i === index ? 'active' : ''}"
-      style="transform: rotateY(${i * (360 / count)}deg) translateZ(${radius + imageSpacing}px)">
+      ${i===index?'active':''}"
+      style="transform: rotateY(${i*360/count}deg) translateZ(${radius}px)">
       <img src="${src}" class="w-full h-full object-cover cursor-pointer">
     </div>
   `).join('');
-
-  carousel.style.transform = `translateZ(-${radius + imageSpacing}px) rotateY(${angle}deg)`;
+  carousel.style.transform = `translateZ(-${radius}px) rotateY(${angle}deg)`;
 }
 
-document.getElementById('next').onclick = () => {
-  angle -= 360 / count;
-  index = (index + 1) % count;
-  renderCarousel();
+document.getElementById('next').onclick=()=>{
+  angle-=360/count; index=(index+1)%count; renderCarousel();
+};
+document.getElementById('prev').onclick=()=>{
+  angle+=360/count; index=(index-1+count)%count; renderCarousel();
 };
 
-document.getElementById('prev').onclick = () => {
-  angle += 360 / count;
-  index = (index - 1 + count) % count;
-  renderCarousel();
-};
-
-carousel.onclick = e => {
-  const img = e.target.closest('img');
-  if (!img) return;
-  modalImg.src = img.src;
+carousel.onclick=e=>{
+  const img=e.target.closest('img');
+  if(!img) return;
+  modalImg.src=img.src;
   modal.classList.remove('hidden');
 };
+modal.onclick=()=>modal.classList.add('hidden');
 
-modal.onclick = () => modal.classList.add('hidden');
-
-setInterval(() => document.getElementById('next').click(), 4000);
+setInterval(()=>document.getElementById('next').click(),4000);
 renderCarousel();
 </script>
 
