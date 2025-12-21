@@ -1,256 +1,213 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Giovy – Creazioni fatte a mano</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Giovy</title>
 
-<!-- FONT -->
-<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
 
-<style>
-/* RESET + FIX RIGA BIANCA */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+  <style>
+    @font-face {
+      font-family: 'Kurale';
+      src: url('Kurale-Regular.ttf') format('truetype');
+    }
 
-html, body {
-  width: 100%;
-  overflow-x: hidden;
-  font-family: 'Poppins', sans-serif;
-}
+    body { min-height: 100vh; }
 
-/* HEADER */
-header {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  height: 60px;
-  background: #7e2bbd;
-  color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 20px;
-  z-index: 100;
-}
+    .font-kurale { font-family: 'Kurale', serif; }
 
-header h1 {
-  font-family: 'Pacifico', cursive;
-  font-size: 26px;
-}
+    .perspective-1000 { perspective: 1000px; }
+    .transform-style-3d { transform-style: preserve-3d; }
+    .backface-hidden { backface-visibility: hidden; }
 
-.menu {
-  font-size: 28px;
-  cursor: pointer;
-}
+    .animate-fade-up {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.7s ease-out;
+    }
+    .animate-fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
 
-/* HERO */
-#hero {
-  position: relative;
-  min-height: 85vh;
-  padding-top: 60px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  overflow: hidden;
-}
+    .carousel-item img {
+      transition: transform .8s ease, box-shadow .8s ease;
+    }
 
-#hero img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
+    .carousel-item.active img {
+      transform: scale(1.1);
+      box-shadow: 0 20px 40px rgba(0,0,0,.45);
+    }
 
-#hero::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: rgba(0,0,0,0.45);
-}
-
-.hero-content {
-  position: relative;
-  color: #fff;
-  z-index: 1;
-}
-
-.hero-content h2 {
-  font-family: 'Pacifico', cursive;
-  font-size: 56px;
-}
-
-.hero-content p {
-  font-size: 18px;
-  margin-top: 10px;
-}
-
-/* CAROUSEL */
-.carousel-section {
-  padding: 60px 0;
-  background: #f8f8f8;
-}
-
-.carousel-wrapper {
-  perspective: 1200px;
-  width: 100%;
-  height: 360px;
-  position: relative;
-  overflow: hidden;
-}
-
-.carousel {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  transform-style: preserve-3d;
-  transition: transform 1s ease;
-}
-
-.carousel-item {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 240px;
-  height: 320px;
-  margin-left: -120px;
-  margin-top: -160px;
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: 0 15px 40px rgba(0,0,0,0.3);
-  transition: transform 1s ease, opacity 0.6s ease;
-  opacity: 0;
-  pointer-events: none;
-}
-
-.carousel-item img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transform: scaleX(1.15);
-}
-
-.carousel-item.active {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-.carousel-item.active img {
-  transform: scale(1.1);
-}
-
-.carousel-item.prev,
-.carousel-item.next {
-  opacity: 0.9;
-}
-
-/* CONTROLLI */
-.controls {
-  text-align: center;
-  margin-top: 20px;
-}
-
-.controls button {
-  padding: 10px 18px;
-  margin: 0 8px;
-  border: none;
-  background: #7e2bbd;
-  color: white;
-  border-radius: 6px;
-  font-size: 18px;
-  cursor: pointer;
-}
-
-/* MOBILE */
-@media (max-width: 600px) {
-  .hero-content h2 {
-    font-size: 42px;
-  }
-
-  .carousel-item {
-    width: 200px;
-    height: 280px;
-    margin-left: -100px;
-    margin-top: -140px;
-  }
-}
-</style>
+    html { scroll-behavior: smooth; }
+  </style>
 </head>
 
-<body>
+<body class="bg-gray-50 overflow-x-hidden">
 
-<header>
-  <h1>Giovy</h1>
-  <div class="menu">☰</div>
+<!-- HEADER -->
+<header class="bg-purple-700 fixed w-full top-0 z-50 flex justify-between items-center px-4 py-4 shadow-md">
+  <h1 class="text-2xl text-white font-bold font-kurale">Giovy</h1>
+
+  <nav class="hidden md:flex space-x-6 text-white">
+    <a href="#hero">Home</a>
+    <a href="#about">Chi Sono</a>
+    <a href="#gallery">Galleria</a>
+    <a href="#contact">Contatti</a>
+  </nav>
+
+  <button id="menu-button" class="md:hidden text-white text-2xl">☰</button>
 </header>
 
-<section id="hero">
-  <img src="GIOVY_home.png" onerror="this.src='heroGiovanna.jpg'">
-  <div class="hero-content">
-    <h2>Giovy</h2>
-    <p>Creazioni fatte a mano con amore</p>
+<!-- OVERLAY -->
+<div id="overlay" class="fixed inset-0 bg-black/50 opacity-0 pointer-events-none z-40 md:hidden transition"></div>
+
+<!-- MENU MOBILE -->
+<nav id="mobile-menu"
+  class="fixed top-0 right-0 w-64 h-full bg-purple-700 text-white z-50 transform translate-x-full transition-transform duration-300 md:hidden p-6">
+  <button id="close-menu" class="text-2xl mb-6">×</button>
+  <ul class="space-y-6 text-lg">
+    <li><a href="#hero">Home</a></li>
+    <li><a href="#about">Chi Sono</a></li>
+    <li><a href="#gallery">Galleria</a></li>
+    <li><a href="#contact">Contatti</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero" class="relative min-h-[85vh] pt-16 flex items-center justify-center">
+  <img id="hero-img" src="GIOVY_home.png"
+       class="absolute inset-0 w-full h-full object-cover opacity-90">
+  <div class="absolute inset-0 bg-black/60"></div>
+
+  <div class="relative z-10 text-center text-white animate-fade-up">
+    <h2 class="text-7xl md:text-8xl font-kurale mb-6">Giovy</h2>
+    <p class="text-xl md:text-2xl">Creazioni fatte a mano con amore</p>
   </div>
 </section>
 
-<section class="carousel-section">
-  <div class="carousel-wrapper">
-    <div id="carousel" class="carousel"></div>
-  </div>
-
-  <div class="controls">
-    <button onclick="prev()">‹</button>
-    <button onclick="next()">›</button>
-  </div>
+<!-- PROMO -->
+<section class="py-16 bg-white animate-fade-up text-center px-6">
+  <h2 class="text-4xl font-bold text-purple-700 mb-4">Tradizione & Stile</h2>
+  <p class="max-w-3xl mx-auto text-gray-700">
+    Creazioni artigianali realizzate con materiali di qualità e attenzione ai dettagli.
+  </p>
 </section>
 
-<script>
-const images = [
-  'foto1.jpg','foto2.jpg','foto3.jpg','foto4.jpg','foto5.jpg',
-  'foto6.jpg','foto7.jpg','foto8.jpg','foto9.jpg','foto10.jpg'
-];
+<!-- GALLERIA -->
+<section id="gallery" class="py-20 bg-gray-100 animate-fade-up">
+  <div class="max-w-4xl mx-auto text-center">
+    <h2 class="text-4xl font-bold text-purple-700 mb-4">Galleria</h2>
+    <p class="text-gray-700 mb-12">Esplora le creazioni in una rotazione 3D</p>
 
-const carousel = document.getElementById('carousel');
-const count = images.length;
-let index = 0;
-let angle = 0;
-const width = 240;
-const radius = Math.round((width / 2) / Math.tan(Math.PI / count)) + 60;
-
-function renderCarousel() {
-  carousel.innerHTML = images.map((src, i) => {
-    let cls = 'carousel-item';
-    if (i === index) cls += ' active';
-    else if (i === (index - 1 + count) % count) cls += ' prev';
-    else if (i === (index + 1) % count) cls += ' next';
-
-    return `
-      <div class="${cls}"
-        style="transform: rotateY(${i * 360 / count}deg) translateZ(${radius}px)">
-        <img src="${src}">
+    <div class="relative w-[360px] h-[360px] mx-auto">
+      <div class="perspective-1000 w-full h-full overflow-hidden">
+        <div id="carousel" class="relative w-full h-full transform-style-3d transition-transform duration-1000"></div>
       </div>
-    `;
-  }).join('');
 
+      <button id="prev" class="absolute -left-6 top-1/2 bg-white rounded-full px-3 py-1 shadow">‹</button>
+      <button id="next" class="absolute -right-6 top-1/2 bg-white rounded-full px-3 py-1 shadow">›</button>
+    </div>
+  </div>
+</section>
+
+<!-- MODAL -->
+<div id="image-modal" class="fixed inset-0 bg-black/80 hidden z-50 flex items-center justify-center">
+  <img id="modal-img" class="max-w-[90%] max-h-[90%] rounded-xl shadow-2xl">
+</div>
+
+<!-- ABOUT -->
+<section id="about" class="py-20 bg-white animate-fade-up text-center px-6">
+  <h2 class="text-4xl font-bold text-purple-700 mb-6">Chi Sono</h2>
+  <p class="max-w-3xl mx-auto text-gray-700">
+    Creo oggetti artigianali intrecciando storie, non solo fili.
+  </p>
+</section>
+
+<!-- CONTATTI -->
+<section id="contact" class="py-20 bg-gray-100 animate-fade-up text-center">
+  <h2 class="text-4xl font-bold text-purple-700 mb-6">Contattami</h2>
+  <a href="https://wa.me/1234567890"
+     class="bg-purple-700 text-white px-8 py-3 rounded-lg shadow hover:bg-purple-800">
+    WhatsApp
+  </a>
+</section>
+
+<footer class="bg-purple-700 text-white text-center py-6">
+  © 2025 Giovy
+</footer>
+
+<!-- SCRIPT -->
+<script>
+/* MENU MOBILE */
+const menuBtn = document.getElementById('menu-button');
+const mobileMenu = document.getElementById('mobile-menu');
+const overlay = document.getElementById('overlay');
+const closeMenu = document.getElementById('close-menu');
+
+menuBtn.onclick = () => {
+  mobileMenu.classList.remove('translate-x-full');
+  overlay.classList.remove('opacity-0','pointer-events-none');
+};
+overlay.onclick = closeMenu.onclick = () => {
+  mobileMenu.classList.add('translate-x-full');
+  overlay.classList.add('opacity-0','pointer-events-none');
+};
+
+/* FADE */
+const fades = document.querySelectorAll('.animate-fade-up');
+const reveal = () => fades.forEach(el => {
+  if (el.getBoundingClientRect().top < window.innerHeight - 80)
+    el.classList.add('visible');
+});
+window.addEventListener('scroll', reveal);
+window.addEventListener('load', reveal);
+
+/* HERO FALLBACK */
+document.getElementById('hero-img').onerror = function() {
+  this.src = 'heroGiovanna.jpg';
+};
+
+/* CAROUSEL 3D */
+const carousel = document.getElementById('carousel');
+const modal = document.getElementById('image-modal');
+const modalImg = document.getElementById('modal-img');
+
+const images = Array.from({length:20},(_,i)=>`GIOVY_Galleria (${i+1}).jpeg`);
+const width = 240;
+const count = images.length;
+const radius = Math.round((width/2)/Math.tan(Math.PI/count));
+let angle = 0, index = 0;
+
+function renderCarousel(){
+  carousel.innerHTML = images.map((src,i)=>`
+    <div class="carousel-item absolute top-1/2 left-1/2 w-[240px] h-[320px]
+      -ml-[120px] -mt-[160px] rounded-xl overflow-hidden shadow-lg
+      ${i===index?'active':''}"
+      style="transform: rotateY(${i*360/count}deg) translateZ(${radius}px)">
+      <img src="${src}" class="w-full h-full object-cover cursor-pointer">
+    </div>
+  `).join('');
   carousel.style.transform = `translateZ(-${radius}px) rotateY(${angle}deg)`;
 }
 
-function next() {
-  index = (index + 1) % count;
-  angle -= 360 / count;
-  renderCarousel();
-}
+document.getElementById('next').onclick=()=>{
+  angle-=360/count; index=(index+1)%count; renderCarousel();
+};
+document.getElementById('prev').onclick=()=>{
+  angle+=360/count; index=(index-1+count)%count; renderCarousel();
+};
 
-function prev() {
-  index = (index - 1 + count) % count;
-  angle += 360 / count;
-  renderCarousel();
-}
+carousel.onclick=e=>{
+  const img=e.target.closest('img');
+  if(!img) return;
+  modalImg.src=img.src;
+  modal.classList.remove('hidden');
+};
+modal.onclick=()=>modal.classList.add('hidden');
 
+setInterval(()=>document.getElementById('next').click(),4000);
 renderCarousel();
 </script>
 
