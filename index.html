@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Giovy</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
@@ -13,6 +13,8 @@
       src: url('Kurale-Regular.ttf') format('truetype');
     }
 
+    body { min-height: 100vh; }
+
     .font-kurale { font-family: 'Kurale', serif; }
 
     .perspective-1000 { perspective: 1000px; }
@@ -22,7 +24,7 @@
     .animate-fade-up {
       opacity: 0;
       transform: translateY(20px);
-      transition: all 0.6s ease-out;
+      transition: all 0.7s ease-out;
     }
     .animate-fade-up.visible {
       opacity: 1;
@@ -30,12 +32,12 @@
     }
 
     .carousel-item img {
-      transition: transform 0.8s ease, box-shadow 0.8s ease;
+      transition: transform .8s ease, box-shadow .8s ease;
     }
 
     .carousel-item.active img {
       transform: scale(1.1);
-      box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+      box-shadow: 0 20px 40px rgba(0,0,0,.45);
     }
 
     html { scroll-behavior: smooth; }
@@ -47,37 +49,65 @@
 <!-- HEADER -->
 <header class="bg-purple-700 fixed w-full top-0 z-50 flex justify-between items-center px-4 py-4 shadow-md">
   <h1 class="text-2xl text-white font-bold font-kurale">Giovy</h1>
+
   <nav class="hidden md:flex space-x-6 text-white">
     <a href="#hero">Home</a>
     <a href="#about">Chi Sono</a>
     <a href="#gallery">Galleria</a>
     <a href="#contact">Contatti</a>
   </nav>
+
+  <button id="menu-button" class="md:hidden text-white text-2xl">☰</button>
 </header>
+
+<!-- OVERLAY -->
+<div id="overlay" class="fixed inset-0 bg-black/50 opacity-0 pointer-events-none z-40 md:hidden transition"></div>
+
+<!-- MENU MOBILE -->
+<nav id="mobile-menu"
+  class="fixed top-0 right-0 w-64 h-full bg-purple-700 text-white z-50 transform translate-x-full transition-transform duration-300 md:hidden p-6">
+  <button id="close-menu" class="text-2xl mb-6">×</button>
+  <ul class="space-y-6 text-lg">
+    <li><a href="#hero">Home</a></li>
+    <li><a href="#about">Chi Sono</a></li>
+    <li><a href="#gallery">Galleria</a></li>
+    <li><a href="#contact">Contatti</a></li>
+  </ul>
+</nav>
 
 <!-- HERO -->
 <section id="hero" class="relative min-h-[85vh] pt-16 flex items-center justify-center">
-  <img src="GIOVY_home.png" class="absolute inset-0 w-full h-full object-cover opacity-90">
+  <img id="hero-img" src="GIOVY_home.png"
+       class="absolute inset-0 w-full h-full object-cover opacity-90">
   <div class="absolute inset-0 bg-black/60"></div>
+
   <div class="relative z-10 text-center text-white animate-fade-up">
-    <h2 class="text-7xl font-kurale mb-4">Giovy</h2>
-    <p class="text-xl">Creazioni fatte a mano con amore</p>
+    <h2 class="text-7xl md:text-8xl font-kurale mb-6">Giovy</h2>
+    <p class="text-xl md:text-2xl">Creazioni fatte a mano con amore</p>
   </div>
+</section>
+
+<!-- PROMO -->
+<section class="py-16 bg-white animate-fade-up text-center px-6">
+  <h2 class="text-4xl font-bold text-purple-700 mb-4">Tradizione & Stile</h2>
+  <p class="max-w-3xl mx-auto text-gray-700">
+    Creazioni artigianali realizzate con materiali di qualità e attenzione ai dettagli.
+  </p>
 </section>
 
 <!-- GALLERIA -->
 <section id="gallery" class="py-20 bg-gray-100 animate-fade-up">
   <div class="max-w-4xl mx-auto text-center">
     <h2 class="text-4xl font-bold text-purple-700 mb-4">Galleria</h2>
-    <p class="text-gray-700 mb-12">Esplora le creazioni in 3D</p>
+    <p class="text-gray-700 mb-12">Esplora le creazioni in una rotazione 3D</p>
 
     <div class="relative w-[360px] h-[360px] mx-auto">
       <div class="perspective-1000 w-full h-full overflow-hidden">
         <div id="carousel" class="relative w-full h-full transform-style-3d transition-transform duration-1000"></div>
       </div>
 
-      <button id="prev" class="absolute left-[-20px] top-1/2 bg-white rounded-full px-3 py-1 shadow">‹</button>
-      <button id="next" class="absolute right-[-20px] top-1/2 bg-white rounded-full px-3 py-1 shadow">›</button>
+      <button id="prev" class="absolute -left-6 top-1/2 bg-white rounded-full px-3 py-1 shadow">‹</button>
+      <button id="next" class="absolute -right-6 top-1/2 bg-white rounded-full px-3 py-1 shadow">›</button>
     </div>
   </div>
 </section>
@@ -88,17 +118,20 @@
 </div>
 
 <!-- ABOUT -->
-<section id="about" class="py-20 bg-white animate-fade-up">
-  <div class="max-w-4xl mx-auto text-center">
-    <h2 class="text-4xl font-bold text-purple-700 mb-6">Chi Sono</h2>
-    <p class="text-gray-700">Creazioni artigianali nate dalla passione.</p>
-  </div>
+<section id="about" class="py-20 bg-white animate-fade-up text-center px-6">
+  <h2 class="text-4xl font-bold text-purple-700 mb-6">Chi Sono</h2>
+  <p class="max-w-3xl mx-auto text-gray-700">
+    Creo oggetti artigianali intrecciando storie, non solo fili.
+  </p>
 </section>
 
 <!-- CONTATTI -->
 <section id="contact" class="py-20 bg-gray-100 animate-fade-up text-center">
   <h2 class="text-4xl font-bold text-purple-700 mb-6">Contattami</h2>
-  <a href="https://wa.me/1234567890" class="bg-purple-700 text-white px-8 py-3 rounded-lg">WhatsApp</a>
+  <a href="https://wa.me/1234567890"
+     class="bg-purple-700 text-white px-8 py-3 rounded-lg shadow hover:bg-purple-800">
+    WhatsApp
+  </a>
 </section>
 
 <footer class="bg-purple-700 text-white text-center py-6">
@@ -107,55 +140,75 @@
 
 <!-- SCRIPT -->
 <script>
-  const carousel = document.getElementById('carousel');
-  const modal = document.getElementById('image-modal');
-  const modalImg = document.getElementById('modal-img');
+/* MENU MOBILE */
+const menuBtn = document.getElementById('menu-button');
+const mobileMenu = document.getElementById('mobile-menu');
+const overlay = document.getElementById('overlay');
+const closeMenu = document.getElementById('close-menu');
 
-  const items = Array.from({ length: 20 }, (_, i) => `GIOVY_Galleria (${i + 1}).jpeg`);
+menuBtn.onclick = () => {
+  mobileMenu.classList.remove('translate-x-full');
+  overlay.classList.remove('opacity-0','pointer-events-none');
+};
+overlay.onclick = closeMenu.onclick = () => {
+  mobileMenu.classList.add('translate-x-full');
+  overlay.classList.add('opacity-0','pointer-events-none');
+};
 
-  const itemWidth = 240;
-  const count = items.length;
-  const radius = Math.round((itemWidth / 2) / Math.tan(Math.PI / count));
+/* FADE */
+const fades = document.querySelectorAll('.animate-fade-up');
+const reveal = () => fades.forEach(el => {
+  if (el.getBoundingClientRect().top < window.innerHeight - 80)
+    el.classList.add('visible');
+});
+window.addEventListener('scroll', reveal);
+window.addEventListener('load', reveal);
 
-  let angle = 0;
-  let index = 0;
+/* HERO FALLBACK */
+document.getElementById('hero-img').onerror = function() {
+  this.src = 'heroGiovanna.jpg';
+};
 
-  function render() {
-    carousel.innerHTML = items.map((src, i) => `
-      <div class="carousel-item absolute top-1/2 left-1/2 w-[240px] h-[320px]
-        -ml-[120px] -mt-[160px] rounded-xl overflow-hidden shadow-lg
-        ${i === index ? 'active' : ''}"
-        style="transform: rotateY(${i * 360 / count}deg) translateZ(${radius}px)">
-        <img src="${src}" class="w-full h-full object-cover cursor-pointer">
-      </div>
-    `).join('');
+/* CAROUSEL 3D */
+const carousel = document.getElementById('carousel');
+const modal = document.getElementById('image-modal');
+const modalImg = document.getElementById('modal-img');
 
-    carousel.style.transform = `translateZ(-${radius}px) rotateY(${angle}deg)`;
-  }
+const images = Array.from({length:20},(_,i)=>`GIOVY_Galleria (${i+1}).jpeg`);
+const width = 240;
+const count = images.length;
+const radius = Math.round((width/2)/Math.tan(Math.PI/count));
+let angle = 0, index = 0;
 
-  document.getElementById('next').onclick = () => {
-    angle -= 360 / count;
-    index = (index + 1) % count;
-    render();
-  };
+function renderCarousel(){
+  carousel.innerHTML = images.map((src,i)=>`
+    <div class="carousel-item absolute top-1/2 left-1/2 w-[240px] h-[320px]
+      -ml-[120px] -mt-[160px] rounded-xl overflow-hidden shadow-lg
+      ${i===index?'active':''}"
+      style="transform: rotateY(${i*360/count}deg) translateZ(${radius}px)">
+      <img src="${src}" class="w-full h-full object-cover cursor-pointer">
+    </div>
+  `).join('');
+  carousel.style.transform = `translateZ(-${radius}px) rotateY(${angle}deg)`;
+}
 
-  document.getElementById('prev').onclick = () => {
-    angle += 360 / count;
-    index = (index - 1 + count) % count;
-    render();
-  };
+document.getElementById('next').onclick=()=>{
+  angle-=360/count; index=(index+1)%count; renderCarousel();
+};
+document.getElementById('prev').onclick=()=>{
+  angle+=360/count; index=(index-1+count)%count; renderCarousel();
+};
 
-  carousel.addEventListener('click', e => {
-    const img = e.target.closest('img');
-    if (!img) return;
-    modalImg.src = img.src;
-    modal.classList.remove('hidden');
-  });
+carousel.onclick=e=>{
+  const img=e.target.closest('img');
+  if(!img) return;
+  modalImg.src=img.src;
+  modal.classList.remove('hidden');
+};
+modal.onclick=()=>modal.classList.add('hidden');
 
-  modal.onclick = () => modal.classList.add('hidden');
-
-  setInterval(() => document.getElementById('next').click(), 4000);
-  render();
+setInterval(()=>document.getElementById('next').click(),4000);
+renderCarousel();
 </script>
 
 </body>
