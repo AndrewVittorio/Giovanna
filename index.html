@@ -177,37 +177,46 @@ const modalImg = document.getElementById('modal-img');
 const images = Array.from({length:20},(_,i)=>`GIOVY_Galleria (${i+1}).jpeg`);
 const width = 240;
 const count = images.length;
-const radius = Math.round((width/2)/Math.tan(Math.PI/count));
+const radius = Math.round((width / 2) / Math.tan(Math.PI / (count / 2))); // Aumenta la separazione tra le immagini
+const imageSpacing = 20; // Spazio tra le immagini
+
 let angle = 0, index = 0;
 
-function renderCarousel(){
-  carousel.innerHTML = images.map((src,i)=>`
+function renderCarousel() {
+  carousel.innerHTML = images.map((src,i) => `
     <div class="carousel-item absolute top-1/2 left-1/2 w-[240px] h-[320px]
       -ml-[120px] -mt-[160px] rounded-xl overflow-hidden shadow-lg
-      ${i===index?'active':''}"
-      style="transform: rotateY(${i*360/count}deg) translateZ(${radius}px)">
+      ${i === index ? 'active' : ''}"
+      style="transform: rotateY(${i * (360 / count)}deg) translateZ(${radius + imageSpacing}px)">
       <img src="${src}" class="w-full h-full object-cover cursor-pointer">
     </div>
   `).join('');
-  carousel.style.transform = `translateZ(-${radius}px) rotateY(${angle}deg)`;
+
+  carousel.style.transform = `translateZ(-${radius + imageSpacing}px) rotateY(${angle}deg)`;
 }
 
-document.getElementById('next').onclick=()=>{
-  angle-=360/count; index=(index+1)%count; renderCarousel();
-};
-document.getElementById('prev').onclick=()=>{
-  angle+=360/count; index=(index-1+count)%count; renderCarousel();
+document.getElementById('next').onclick = () => {
+  angle -= 360 / count;
+  index = (index + 1) % count;
+  renderCarousel();
 };
 
-carousel.onclick=e=>{
-  const img=e.target.closest('img');
-  if(!img) return;
-  modalImg.src=img.src;
+document.getElementById('prev').onclick = () => {
+  angle += 360 / count;
+  index = (index - 1 + count) % count;
+  renderCarousel();
+};
+
+carousel.onclick = e => {
+  const img = e.target.closest('img');
+  if (!img) return;
+  modalImg.src = img.src;
   modal.classList.remove('hidden');
 };
-modal.onclick=()=>modal.classList.add('hidden');
 
-setInterval(()=>document.getElementById('next').click(),4000);
+modal.onclick = () => modal.classList.add('hidden');
+
+setInterval(() => document.getElementById('next').click(), 4000);
 renderCarousel();
 </script>
 
