@@ -41,6 +41,20 @@
     }
 
     html { scroll-behavior: smooth; }
+
+    /* Frecce più grandi */
+    .arrow-btn {
+      font-size: 32px;  /* Aumenta la dimensione */
+      width: 48px;
+      height: 48px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: white;
+      color: purple;
+      border-radius: 50%;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    }
   </style>
 </head>
 
@@ -106,8 +120,8 @@
         <div id="carousel" class="relative w-full h-full transform-style-3d transition-transform duration-1000"></div>
       </div>
 
-      <button id="prev" class="absolute -left-6 top-1/2 bg-white rounded-full px-3 py-1 shadow">‹</button>
-      <button id="next" class="absolute -right-6 top-1/2 bg-white rounded-full px-3 py-1 shadow">›</button>
+      <button id="prev" class="arrow-btn absolute -left-6 top-1/2">‹</button>
+      <button id="next" class="arrow-btn absolute -right-6 top-1/2">›</button>
     </div>
   </div>
 </section>
@@ -169,7 +183,7 @@ document.getElementById('hero-img').onerror = function() {
   this.src = 'heroGiovanna.jpg';
 };
 
-/* CAROUSEL 3D */
+/* CAROUSEL */
 const carousel = document.getElementById('carousel');
 const modal = document.getElementById('image-modal');
 const modalImg = document.getElementById('modal-img');
@@ -177,37 +191,36 @@ const modalImg = document.getElementById('modal-img');
 const images = Array.from({length:20},(_,i)=>`GIOVY_Galleria (${i+1}).jpeg`);
 const width = 240;
 const count = images.length;
-const radius = Math.round((width/2)/Math.tan(Math.PI/count));
-let angle = 0, index = 0;
+let index = 0;
 
 function renderCarousel(){
-  carousel.innerHTML = images.map((src,i)=>`
-    <div class="carousel-item absolute top-1/2 left-1/2 w-[240px] h-[320px]
-      -ml-[120px] -mt-[160px] rounded-xl overflow-hidden shadow-lg
-      ${i===index?'active':''}"
-      style="transform: rotateY(${i*360/count}deg) translateZ(${radius}px)">
-      <img src="${src}" class="w-full h-full object-cover cursor-pointer">
+  carousel.innerHTML = `
+    <div class="carousel-item w-[240px] h-[320px] mx-auto rounded-xl overflow-hidden shadow-lg">
+      <img src="${images[index]}" class="w-full h-full object-cover cursor-pointer">
     </div>
-  `).join('');
-  carousel.style.transform = `translateZ(-${radius}px) rotateY(${angle}deg)`;
+  `;
 }
 
-document.getElementById('next').onclick=()=>{
-  angle-=360/count; index=(index+1)%count; renderCarousel();
-};
-document.getElementById('prev').onclick=()=>{
-  angle+=360/count; index=(index-1+count)%count; renderCarousel();
+document.getElementById('next').onclick = () => {
+  index = (index + 1) % count;
+  renderCarousel();
 };
 
-carousel.onclick=e=>{
-  const img=e.target.closest('img');
-  if(!img) return;
-  modalImg.src=img.src;
+document.getElementById('prev').onclick = () => {
+  index = (index - 1 + count) % count;
+  renderCarousel();
+};
+
+carousel.onclick = e => {
+  const img = e.target.closest('img');
+  if (!img) return;
+  modalImg.src = img.src;
   modal.classList.remove('hidden');
 };
-modal.onclick=()=>modal.classList.add('hidden');
 
-setInterval(()=>document.getElementById('next').click(),4000);
+modal.onclick = () => modal.classList.add('hidden');
+
+setInterval(() => document.getElementById('next').click(), 4000);
 renderCarousel();
 </script>
 
