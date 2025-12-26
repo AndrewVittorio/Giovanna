@@ -15,7 +15,7 @@
 
     html, body {
       width: 100%;
-      overflow-x: hidden;
+      overflow-x: hidden; /* FIX definitivo */
     }
 
     body { min-height: 100vh; }
@@ -55,20 +55,45 @@
       color: purple;
       border-radius: 50%;
       box-shadow: 0 4px 8px rgba(0,0,0,.3);
+      z-index: 10;
     }
   </style>
 </head>
 
 <body class="bg-gray-50">
 
+<!-- HEADER -->
 <header class="bg-purple-700 fixed w-full top-0 z-50 flex justify-between items-center px-4 py-4 shadow-md">
   <h1 class="text-2xl text-white font-bold font-kurale">Giovy</h1>
+
+  <nav class="hidden md:flex space-x-6 text-white">
+    <a href="#hero">Home</a>
+    <a href="#about">Chi Sono</a>
+    <a href="#gallery">Galleria</a>
+    <a href="#contact">Contatti</a>
+  </nav>
+
   <button id="menu-button" class="md:hidden text-white text-2xl">☰</button>
 </header>
 
+<!-- OVERLAY -->
+<div id="overlay" class="fixed inset-0 bg-black/50 opacity-0 pointer-events-none z-40 md:hidden transition"></div>
+
+<!-- MENU MOBILE -->
+<nav id="mobile-menu"
+  class="fixed top-0 right-0 w-64 h-full bg-purple-700 text-white z-50 transform translate-x-full transition-transform duration-300 md:hidden p-6">
+  <button id="close-menu" class="text-2xl mb-6">×</button>
+  <ul class="space-y-6 text-lg">
+    <li><a href="#hero">Home</a></li>
+    <li><a href="#about">Chi Sono</a></li>
+    <li><a href="#gallery">Galleria</a></li>
+    <li><a href="#contact">Contatti</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
 <section id="hero" class="relative min-h-[85vh] pt-16 flex items-center justify-center">
-  <img id="hero-img" src="GIOVY_home.png"
-       class="absolute inset-0 w-full h-full object-cover">
+  <img src="GIOVY_home.png" class="absolute inset-0 w-full h-full object-cover">
   <div class="absolute inset-0 bg-black/60"></div>
 
   <div class="relative z-10 text-center text-white animate-fade-up">
@@ -77,9 +102,19 @@
   </div>
 </section>
 
+<!-- PROMO -->
+<section class="py-16 bg-white animate-fade-up text-center px-6">
+  <h2 class="text-4xl font-bold text-purple-700 mb-4">Tradizione & Stile</h2>
+  <p class="max-w-3xl mx-auto text-gray-700">
+    Creazioni artigianali realizzate con materiali di qualità e attenzione ai dettagli.
+  </p>
+</section>
+
+<!-- GALLERIA -->
 <section id="gallery" class="py-20 bg-gray-100 animate-fade-up overflow-hidden">
   <div class="max-w-4xl mx-auto text-center">
     <h2 class="text-4xl font-bold text-purple-700 mb-4">Galleria</h2>
+    <p class="text-gray-700 mb-12">Esplora le creazioni</p>
 
     <div class="relative w-[360px] h-[360px] mx-auto">
       <div class="perspective-1000 w-full h-full overflow-hidden">
@@ -88,14 +123,60 @@
 
       <button id="prev"
         class="arrow-btn absolute left-2 md:-left-6 top-1/2 -translate-y-1/2">‹</button>
-
       <button id="next"
         class="arrow-btn absolute right-2 md:-right-6 top-1/2 -translate-y-1/2">›</button>
     </div>
   </div>
 </section>
 
+<!-- ABOUT -->
+<section id="about" class="py-20 bg-white animate-fade-up text-center px-6">
+  <h2 class="text-4xl font-bold text-purple-700 mb-6">Chi Sono</h2>
+  <p class="max-w-3xl mx-auto text-gray-700">
+    Creo oggetti artigianali intrecciando storie, non solo fili.
+  </p>
+</section>
+
+<!-- CONTATTI -->
+<section id="contact" class="py-20 bg-gray-100 animate-fade-up text-center">
+  <h2 class="text-4xl font-bold text-purple-700 mb-6">Contattami</h2>
+  <a href="https://wa.me/1234567890"
+     class="bg-purple-700 text-white px-8 py-3 rounded-lg shadow hover:bg-purple-800">
+    WhatsApp
+  </a>
+</section>
+
+<footer class="bg-purple-700 text-white text-center py-6">
+  © 2025 Giovy
+</footer>
+
+<!-- SCRIPT -->
 <script>
+/* MENU MOBILE */
+const menuBtn = document.getElementById('menu-button');
+const mobileMenu = document.getElementById('mobile-menu');
+const overlay = document.getElementById('overlay');
+const closeMenu = document.getElementById('close-menu');
+
+menuBtn.onclick = () => {
+  mobileMenu.classList.remove('translate-x-full');
+  overlay.classList.remove('opacity-0','pointer-events-none');
+};
+overlay.onclick = closeMenu.onclick = () => {
+  mobileMenu.classList.add('translate-x-full');
+  overlay.classList.add('opacity-0','pointer-events-none');
+};
+
+/* FADE */
+const fades = document.querySelectorAll('.animate-fade-up');
+const reveal = () => fades.forEach(el => {
+  if (el.getBoundingClientRect().top < window.innerHeight - 80)
+    el.classList.add('visible');
+});
+window.addEventListener('scroll', reveal);
+window.addEventListener('load', reveal);
+
+/* CAROUSEL */
 const carousel = document.getElementById('carousel');
 const images = Array.from({length:20},(_,i)=>`GIOVY_Galleria (${i+1}).jpeg`);
 let index = 0;
