@@ -48,8 +48,28 @@
       z-index: 10;
     }
 
+    /* BOTTONI FILTRO */
+    .filter-btn {
+      position: relative;
+      transition: all .3s ease;
+    }
+
     .filter-btn.active {
       background-color: #6b21a8;
+      transform: scale(1.05);
+    }
+
+    /* PALLINO INDICATORE */
+    .filter-btn.active::after {
+      content: "";
+      position: absolute;
+      bottom: -6px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 6px;
+      height: 6px;
+      background: #6b21a8;
+      border-radius: 50%;
     }
   </style>
 </head>
