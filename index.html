@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Giovy</title>
 
-  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://tailwindcss.com"></script>
 
   <style>
     @font-face {
@@ -164,7 +164,7 @@
 <!-- CONTATTI -->
 <section id="contact" class="py-20 bg-gray-100 animate-fade-up text-center">
   <h2 class="text-4xl font-bold text-purple-700 mb-6">Contattami</h2>
-  <a href="https://wa.me/1234567890"
+  <a href="https://wa.me"
      class="bg-purple-700 text-white px-8 py-3 rounded-lg shadow hover:bg-purple-800">
     WhatsApp
   </a>
@@ -202,10 +202,33 @@ window.addEventListener('load', reveal);
 
 /* GALLERIA */
 const categories = {
-  estate: { prefix: 'E', items: [1,13,14,15,16] },
-  natale: { prefix: 'N', items: [3,4,5,6,9,18,19] },
-  borse:  { prefix: 'B', items: [2,10,11,12] },
-  altro:  { prefix: 'A', items: [7,8,17] }
+  estate: [
+    "Estate/GIOVY_Galleria (E1).jpeg",
+    "Estate/GIOVY_Galleria (E13).jpeg",
+    "Estate/GIOVY_Galleria (E14).jpeg",
+    "Estate/GIOVY_Galleria (E15).jpeg",
+    "Estate/GIOVY_Galleria (E16).jpeg"
+  ],
+  natale: [
+    "Natale/GIOVY_Galleria (N3).jpeg",
+    "Natale/GIOVY_Galleria (N4).jpeg",
+    "Natale/GIOVY_Galleria (N5).jpeg",
+    "Natale/GIOVY_Galleria (N6).jpeg",
+    "Natale/GIOVY_Galleria (N9).jpeg",
+    "Natale/GIOVY_Galleria (N18).jpeg",
+    "Natale/GIOVY_Galleria (N19).jpeg"
+  ],
+  borse: [
+    "Borse/GIOVY_Galleria (B2).jpeg",
+    "Borse/GIOVY_Galleria (B10).jpeg",
+    "Borse/GIOVY_Galleria (B11).jpeg",
+    "Borse/GIOVY_Galleria (B12).jpeg"
+  ],
+  altro: [
+    "Altro/GIOVY_Galleria (A7).jpeg",
+    "Altro/GIOVY_Galleria (A8).jpeg",
+    "Altro/GIOVY_Galleria (A17).jpeg"
+  ]
 };
 
 let filteredImages = [];
@@ -215,8 +238,7 @@ const carousel = document.getElementById('carousel');
 const buttons = document.querySelectorAll('.filter-btn');
 
 function setCategory(cat, btn){
-  const categoryData = categories[cat];
-  filteredImages = categoryData.items.map(n => `GIOVY_Galleria (${categoryData.prefix}${n}).jpeg`);
+  filteredImages = categories[cat];
   index = 0;
 
   buttons.forEach(b => b.classList.remove('active'));
