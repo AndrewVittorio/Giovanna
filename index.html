@@ -202,10 +202,10 @@ window.addEventListener('load', reveal);
 
 /* GALLERIA */
 const categories = {
-  estate: [1,13,14,15,16],
-  natale: [3,4,5,6,9,18,19],
-  borse: [2,10,11,12],
-  altro: [7,8,17]
+  estate: { prefix: 'E', items: [1,13,14,15,16] },
+  natale: { prefix: 'N', items: [3,4,5,6,9,18,19] },
+  borse:  { prefix: 'B', items: [2,10,11,12] },
+  altro:  { prefix: 'A', items: [7,8,17] }
 };
 
 let filteredImages = [];
@@ -215,7 +215,8 @@ const carousel = document.getElementById('carousel');
 const buttons = document.querySelectorAll('.filter-btn');
 
 function setCategory(cat, btn){
-  filteredImages = categories[cat].map(n => `GIOVY_Galleria (${n}).jpeg`);
+  const categoryData = categories[cat];
+  filteredImages = categoryData.items.map(n => `GIOVY_Galleria (${categoryData.prefix}${n}).jpeg`);
   index = 0;
 
   buttons.forEach(b => b.classList.remove('active'));
